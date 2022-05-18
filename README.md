@@ -12,8 +12,8 @@
     Matrix4x4 p = createMatrix4x4(1.0);
     perspectiveMatrix(70.0f, width/height, 0.1f, 1000.0f, p);
     
-    Matrix4x4 v = createMatrix4x4(1.0);
-    lookatMatrix((Vector3){0.0,0.0,1.0},(Vector3){0.0,0.0,0.0},(Vector3){0.0,1.0,0.0}, p);
+    Matrix4x4 a = createMatrix4x4(1.0);
+    lookatMatrix((Vector3){0.0,0.0,1.0},(Vector3){0.0,0.0,0.0},(Vector3){0.0,1.0,0.0}, a);
     
     //Send to opengl
     glUniformMatrix4fv(glGetUniformLocation(shader_program,"projection"), 1, GL_FALSE, p);
