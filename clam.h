@@ -736,6 +736,24 @@ float radToDeg(float angle){
 
 }
 
+Vector2 arrayToVector2(float v[2]){
+	
+	return (Vector2){v[0], v[1]};	
+	
+}
+
+Vector3 arrayToVector3(float v[3]){
+	
+	return (Vector3){v[0], v[1], v[2]};	
+	
+}
+
+Vector4 arrayToVector4(float v[4]){
+	
+	return (Vector4){v[0], v[1], v[2], v[3]};	
+	
+}
+
 int compVector2(Vector2 v1, Vector2 v2){
 	
 	return (v1.x == v2.x && v1.y == v2.y);
