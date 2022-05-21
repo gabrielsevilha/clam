@@ -400,8 +400,8 @@ void multiplyMatrix3x3(Matrix3x3 m1, Matrix3x3 m2, Matrix3x3 dest){
 Vector2 multiplyMatrix3x3Vector(Matrix3x3 m, Vector2 v){
 
 	return (Vector2){
-		m[0] * v.x + m[3] * v.y,
-		m[1] * v.x + m[4] * v.y
+		m[0] * v.x + m[3] * v.y + m[6],
+		m[1] * v.x + m[4] * v.y + m[7]
 	};
 	
 }
@@ -540,9 +540,9 @@ void multiplyMatrix4x4(Matrix4x4 m1, Matrix4x4 m2, Matrix4x4 dest){
 Vector3 multiplyMatrix4x4Vector(Matrix4x4 m, Vector3 v){
 
 	return (Vector3){
-		m[0] * v.x + m[4] * v.y + m[8] * v.z,
-		m[1] * v.x + m[5] * v.y + m[9] * v.z,
-		m[2] * v.x + m[6] * v.y + m[10] * v.z
+		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12],
+		m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13],
+		m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14]
 	};
 	
 }
