@@ -39,6 +39,11 @@
 
 //Types
 
+#define INIT_MATRIX_3X3 {1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0}
+#define INIT_ZERO_MATRIX_3X3 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+#define INIT_MATRIX_4X4 {1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0}
+#define INIT_ZERO_MATRIX_4X4 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+
 typedef struct Vector2{
 
 	float x, y;
@@ -57,9 +62,13 @@ typedef struct Vector4{
 
 }Vector4;
 
-typedef float* Matrix3x3;
+typedef float Matrix3x3[9];
 
-typedef float* Matrix4x4;
+typedef float Matrix4x4[16];
+
+typedef float* Matrix3x3P;
+
+typedef float* Matrix4x4P;
 
 //Vector2
 
@@ -367,11 +376,11 @@ float angleVector4(Vector4 v1, Vector4 v2){
 	
 }
 
-//Matrix3x3
+//Matrix3x3P
 
-Matrix3x3 createMatrix3x3(float major_value){
+Matrix3x3P createMatrix3x3(float major_value){
 
-	Matrix3x3 m = (Matrix3x3) calloc(9, sizeof(float)*9);
+	Matrix3x3P m = (Matrix3x3P) calloc(9, sizeof(float)*9);
 	
 	m[0] = major_value;
 	m[4] = major_value;
@@ -381,9 +390,9 @@ Matrix3x3 createMatrix3x3(float major_value){
 
 }
 
-Matrix3x3 createCopyMatrix3x3(Matrix3x3 m){
+Matrix3x3P createCopyMatrix3x3(Matrix3x3P m){
 	
-	Matrix3x3 r = (Matrix3x3) malloc(sizeof(float)*9);
+	Matrix3x3P r = (Matrix3x3P) malloc(sizeof(float)*9);
 	
 	r[0] = m[0], r[1] = m[1], r[2] = m[2],
 	r[3] = m[3], r[4] = m[4], r[5] = m[5],
@@ -393,7 +402,7 @@ Matrix3x3 createCopyMatrix3x3(Matrix3x3 m){
 
 }
 
-void copyMatrix3x3(Matrix3x3 src, Matrix3x3 dest){
+void copyMatrix3x3(Matrix3x3P src, Matrix3x3P dest){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2],
 	dest[3] = src[3], dest[4] = src[4], dest[5] = src[5],
@@ -401,7 +410,7 @@ void copyMatrix3x3(Matrix3x3 src, Matrix3x3 dest){
 	
 }
 
-void identityMatrix3x3(Matrix3x3 m){
+void identityMatrix3x3(Matrix3x3P m){
 
 	m[0] = 1.0f, m[1] = 0.0f, m[2] = 0.0f,
 	m[3] = 0.0f, m[4] = 1.0f, m[5] = 0.0f,
@@ -409,7 +418,7 @@ void identityMatrix3x3(Matrix3x3 m){
 	
 }
 
-void multiplyMatrix3x3(Matrix3x3 m1, Matrix3x3 m2, Matrix3x3 dest){
+void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
 	
 	float a0 = m1[0], a1 = m1[1], a2 = m1[2],
 	a3 = m1[3],	a4 = m1[4], a5 = m1[5],
@@ -433,7 +442,7 @@ void multiplyMatrix3x3(Matrix3x3 m1, Matrix3x3 m2, Matrix3x3 dest){
 		
 }
 
-Vector2 multiplyMatrix3x3Vector2(Matrix3x3 m, Vector2 v){
+Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v){
 
 	return (Vector2){
 		m[0] * v.x + m[3] * v.y + m[6],
@@ -442,7 +451,7 @@ Vector2 multiplyMatrix3x3Vector2(Matrix3x3 m, Vector2 v){
 	
 }
 
-Vector3 multiplyMatrix3x3Vector3(Matrix3x3 m, Vector3 v){
+Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v){
 
 	return (Vector3){
 		m[0] * v.x + m[3] * v.y + m[6] * v.z,
@@ -452,7 +461,7 @@ Vector3 multiplyMatrix3x3Vector3(Matrix3x3 m, Vector3 v){
 	
 }
 
-void transposeMatrix3x3(Matrix3x3 m){
+void transposeMatrix3x3(Matrix3x3P m){
 	
 	float m1 = m[1], m2 = m[2],
 	m3 = m[3], m5 = m[5],
@@ -464,7 +473,7 @@ void transposeMatrix3x3(Matrix3x3 m){
 	
 }
 
-float determinantMatrix3x3(Matrix3x3 m){
+float determinantMatrix3x3(Matrix3x3P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2],
 		m3 = m[3], m4 = m[4], m5 = m[5],
@@ -474,7 +483,7 @@ float determinantMatrix3x3(Matrix3x3 m){
 	
 }
 
-void inverseMatrix3x3(Matrix3x3 m){
+void inverseMatrix3x3(Matrix3x3P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2],
 		m3 = m[3], m4 = m[4], m5 = m[5],
@@ -502,7 +511,7 @@ void inverseMatrix3x3(Matrix3x3 m){
 	
 }
 
-void translateMatrix3x3(Matrix3x3 m, Vector2 v){
+void translateMatrix3x3(Matrix3x3P m, Vector2 v){
 	
 	float r[] = {
 		1.0,0.0,0.0,
@@ -514,7 +523,7 @@ void translateMatrix3x3(Matrix3x3 m, Vector2 v){
 	
 }
 
-void scaleMatrix3x3(Matrix3x3 m, Vector2 v){
+void scaleMatrix3x3(Matrix3x3P m, Vector2 v){
 
 	float r[] = {
 		v.x,0.0,0.0,
@@ -526,7 +535,7 @@ void scaleMatrix3x3(Matrix3x3 m, Vector2 v){
 	
 }
 
-void rotateMatrix3x3(Matrix3x3 m, float angle){
+void rotateMatrix3x3(Matrix3x3P m, float angle){
 	
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -541,11 +550,11 @@ void rotateMatrix3x3(Matrix3x3 m, float angle){
 
 }
 
-//Matrix4x4
+//Matrix4x4P
 
-Matrix4x4 createMatrix4x4(float major_value){
+Matrix4x4P createMatrix4x4(float major_value){
 
-	Matrix4x4 m = (Matrix4x4) calloc(16, sizeof(float)*16);
+	Matrix4x4P m = (Matrix4x4P) calloc(16, sizeof(float)*16);
 	
 	m[0] = major_value;
 	m[5] = major_value;
@@ -556,9 +565,9 @@ Matrix4x4 createMatrix4x4(float major_value){
 
 }
 
-Matrix4x4 createCopyMatrix4x4(Matrix4x4 m){
+Matrix4x4P createCopyMatrix4x4(Matrix4x4P m){
 	
-	Matrix4x4 r = (Matrix4x4) malloc(sizeof(float)*16);
+	Matrix4x4P r = (Matrix4x4P) malloc(sizeof(float)*16);
 	
 	r[0] = m[0], r[1] = m[1], r[2] = m[2], r[3] = m[3],
 	r[4] = m[4], r[5] = m[5], r[6] = m[6], r[7] = m[7],
@@ -569,7 +578,7 @@ Matrix4x4 createCopyMatrix4x4(Matrix4x4 m){
 
 }
 
-void copyMatrix4x4(Matrix4x4 src, Matrix4x4 dest){
+void copyMatrix4x4(Matrix4x4P src, Matrix4x4P dest){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2], dest[3] = src[3],
 	dest[4] = src[4], dest[5] = src[5], dest[6] = src[6], dest[7] = src[7],
@@ -578,7 +587,7 @@ void copyMatrix4x4(Matrix4x4 src, Matrix4x4 dest){
 	
 }
 
-void identityMatrix4x4(Matrix4x4 m){
+void identityMatrix4x4(Matrix4x4P m){
 
 	m[0] = 1.0f, m[1] = 0.0f, m[2] = 0.0f, m[3] = 0.0f,
 	m[4] = 0.0f, m[5] = 1.0f, m[6] = 0.0f, m[7] = 0.0f,
@@ -587,7 +596,7 @@ void identityMatrix4x4(Matrix4x4 m){
 	
 }
 
-void multiplyMatrix4x4(Matrix4x4 m1, Matrix4x4 m2, Matrix4x4 dest){
+void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
 	
 	float a0 = m1[0], a1 = m1[1], a2 = m1[2], a3 = m1[3],
 	a4 = m1[4], a5 = m1[5], a6 = m1[6], a7 = m1[7],
@@ -621,7 +630,7 @@ void multiplyMatrix4x4(Matrix4x4 m1, Matrix4x4 m2, Matrix4x4 dest){
 		
 }
 
-Vector3 multiplyMatrix4x4Vector3(Matrix4x4 m, Vector3 v){
+Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v){
 
 	return (Vector3){
 		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12],
@@ -631,7 +640,7 @@ Vector3 multiplyMatrix4x4Vector3(Matrix4x4 m, Vector3 v){
 	
 }
 
-Vector4 multiplyMatrix4x4Vector4(Matrix4x4 m, Vector4 v){
+Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v){
 
 	return (Vector4){
 		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * v.w,
@@ -642,7 +651,7 @@ Vector4 multiplyMatrix4x4Vector4(Matrix4x4 m, Vector4 v){
 	
 }
 
-void transposeMatrix4x4(Matrix4x4 m){
+void transposeMatrix4x4(Matrix4x4P m){
 	
 	float  m1 = m[1], m2 = m[2], m3 = m[3],
 		m4 = m[4], m6 = m[6], m7 = m[7],
@@ -656,7 +665,7 @@ void transposeMatrix4x4(Matrix4x4 m){
 	
 }
 
-float determinantMatrix4x4(Matrix4x4 m){
+float determinantMatrix4x4(Matrix4x4P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2], m3 = m[3],
 		m4 = m[4], m5 = m[5], m6 = m[6], m7 = m[7],
@@ -680,7 +689,7 @@ float determinantMatrix4x4(Matrix4x4 m){
 	
 }
 
-void inverseMatrix4x4(Matrix4x4 m){
+void inverseMatrix4x4(Matrix4x4P m){
 
 	float r[16];
 	
@@ -718,7 +727,7 @@ void inverseMatrix4x4(Matrix4x4 m){
 	
 }
 
-void translateMatrix4x4(Matrix4x4 m, Vector3 v){
+void translateMatrix4x4(Matrix4x4P m, Vector3 v){
 	
 	float r[] = {
 		1.0,0.0,0.0,0.0,
@@ -731,7 +740,7 @@ void translateMatrix4x4(Matrix4x4 m, Vector3 v){
 	
 }
 
-void scaleMatrix4x4(Matrix4x4 m, Vector3 v){
+void scaleMatrix4x4(Matrix4x4P m, Vector3 v){
 
 	float r[] = {
 		v.x,0.0,0.0,0.0,
@@ -744,7 +753,7 @@ void scaleMatrix4x4(Matrix4x4 m, Vector3 v){
 	
 }
 
-void rotateXMatrix4x4(Matrix4x4 m, float angle){
+void rotateXMatrix4x4(Matrix4x4P m, float angle){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -760,7 +769,7 @@ void rotateXMatrix4x4(Matrix4x4 m, float angle){
 
 }
 
-void rotateYMatrix4x4(Matrix4x4 m, float angle){
+void rotateYMatrix4x4(Matrix4x4P m, float angle){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -776,7 +785,7 @@ void rotateYMatrix4x4(Matrix4x4 m, float angle){
 
 }
 
-void rotateZMatrix4x4(Matrix4x4 m, float angle){
+void rotateZMatrix4x4(Matrix4x4P m, float angle){
 	
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -792,7 +801,7 @@ void rotateZMatrix4x4(Matrix4x4 m, float angle){
 
 }
 
-void rotateMatrix4x4(Matrix4x4 m, float angle, Vector3 v){
+void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -825,7 +834,7 @@ void rotateMatrix4x4(Matrix4x4 m, float angle, Vector3 v){
 
 //Camera
 
-void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4 m){
+void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m){
 
 	float dif_right_left = right - left;
 	float dif_top_bottom = top - bottom;
@@ -841,7 +850,7 @@ void orthographicMatrix(float left, float right, float bottom, float top, float 
 
 }
 
-void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4 m){
+void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m){
 
 	fov *= 3.14159265358979323846f/180.0f;
 
@@ -859,7 +868,7 @@ void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4
 
 }
 
-void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4 m){
+void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m){
 
 	Vector3 z_axis = subVector3(center,eye);
 	z_axis = normalizeVector3(z_axis);
@@ -929,7 +938,7 @@ int compVector4(Vector4 v1, Vector4 v2){
 	
 }
 
-int compMatrix3x3(Matrix3x3 m1, Matrix3x3 m2){
+int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2){
 
 	return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2]
 	&& m1[3] == m2[3] && m1[4] == m2[4] && m1[5] == m2[5]
@@ -937,7 +946,7 @@ int compMatrix3x3(Matrix3x3 m1, Matrix3x3 m2){
 
 }
 
-int compMatrix4x4(Matrix4x4 m1, Matrix4x4 m2){
+int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2){
 
 	return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]
 	&& m1[4] == m2[4] && m1[5] == m2[5] && m1[6] == m2[6] && m1[7] == m2[7]
@@ -964,7 +973,7 @@ void printVector4(Vector4 v){
 	
 }
 
-void printMatrix3x3(Matrix3x3 m){
+void printMatrix3x3(Matrix3x3P m){
 
 	printf("%f %f %f\n%f %f %f\n%f %f %f\n",
 		m[0],m[1],m[2],
@@ -974,7 +983,7 @@ void printMatrix3x3(Matrix3x3 m){
 
 }
 
-void printMatrix4x4(Matrix4x4 m){
+void printMatrix4x4(Matrix4x4P m){
 
 	printf("%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n",
 		m[0],m[1],m[2],m[3],
