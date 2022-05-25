@@ -124,6 +124,17 @@ float crossVector2(Vector2 v1, Vector2 v2){
 
 }
 
+Vector2 reflectVector2(Vector2 d, Vector2 n){
+	
+	float dot = d.x*n.x + d.y*n.y;
+	
+	return (Vector2){
+		d.x - 2.0 * (dot * n.x),
+		d.y - 2.0 * (dot * n.y)
+	};
+	
+}
+
 float dotVector2(Vector2 v1, Vector2 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y);
@@ -216,6 +227,18 @@ Vector3 crossVector3(Vector3 v1, Vector3 v2){
 
 }
 
+Vector3 reflectVector3(Vector3 d, Vector3 n){
+	
+	float dot = d.x*n.x + d.y*n.y + d.z*n.z;
+	
+	return (Vector3){
+		d.x - 2.0 * (dot * n.x),
+		d.y - 2.0 * (dot * n.y),
+		d.z - 2.0 * (dot * n.z)
+	};
+	
+}
+
 float dotVector3(Vector3 v1, Vector3 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
@@ -300,6 +323,19 @@ Vector4 normalizeVector4(Vector4 v){
 	float length = sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)+(v.w*v.w));
 	
 	return (Vector4) {v.x / length, v.y / length, v.z / length, v.w / length};
+	
+}
+
+Vector4 reflectVector4(Vector4 d, Vector4 n){
+	
+	float dot = d.x*n.x + d.y*n.y + d.z*n.z + d.w*d.w;
+	
+	return (Vector4){
+		d.x - 2.0 * (dot * n.x),
+		d.y - 2.0 * (dot * n.y),
+		d.z - 2.0 * (dot * n.z),
+		d.w - 2.0 * (dot * n.w)
+	};
 	
 }
 
@@ -397,11 +433,21 @@ void multiplyMatrix3x3(Matrix3x3 m1, Matrix3x3 m2, Matrix3x3 dest){
 		
 }
 
-Vector2 multiplyMatrix3x3Vector(Matrix3x3 m, Vector2 v){
+Vector2 multiplyMatrix3x3Vector2(Matrix3x3 m, Vector2 v){
 
 	return (Vector2){
 		m[0] * v.x + m[3] * v.y + m[6],
 		m[1] * v.x + m[4] * v.y + m[7]
+	};
+	
+}
+
+Vector3 multiplyMatrix3x3Vector3(Matrix3x3 m, Vector3 v){
+
+	return (Vector3){
+		m[0] * v.x + m[3] * v.y + m[6] * v.z,
+		m[1] * v.x + m[4] * v.y + m[7] * v.z,
+		m[2] * v.x + m[5] * v.y + m[8] * v.z
 	};
 	
 }
@@ -415,6 +461,44 @@ void transposeMatrix3x3(Matrix3x3 m){
 	m[1] = m3, m[2] = m6,
 	m[3] = m1, m[5] = m7,
 	m[6] = m2, m[7] = m5;
+	
+}
+
+float determinantMatrix3x3(Matrix3x3 m){
+	
+	float m0 = m[0], m1 = m[1], m2 = m[2],
+		m3 = m[3], m4 = m[4], m5 = m[5],
+		m6 = m[6], m7 = m[7], m8 = m[8];
+	
+	return (m0*m4*m8 + m1*m5*m6 + m2*m3*m7) - (m2*m4*m6 + m0*m5*m7 + m1*m3*m8);
+	
+}
+
+void inverseMatrix3x3(Matrix3x3 m){
+	
+	float m0 = m[0], m1 = m[1], m2 = m[2],
+		m3 = m[3], m4 = m[4], m5 = m[5],
+		m6 = m[6], m7 = m[7], m8 = m[8];
+	
+	float r[9];
+	
+	r[0] = m4*m8 - m5*m7;
+	r[3] = -(m3*m8 - m5*m6);
+	r[6] = m3*m7 - m4*m6;
+	
+	r[1] = -(m1*m8 - m2*m7);
+	r[4] = m0*m8 - m2*m6;
+	r[7] = -(m0*m7 - m1*m6);
+	
+	r[2] = m1*m5 - m2*m4;
+	r[5] = -(m0*m5 - m2*m3);
+	r[8] = m0*m4 - m1*m3;
+	
+	float d = 1.0f / ( (m0*m4*m8 + m1*m5*m6 + m2*m3*m7) - (m2*m4*m6 + m0*m5*m7 + m1*m3*m8) );
+	
+	m[0] = r[0] * d, m[1] = r[1] * d, m[2] = r[2] * d,
+	m[3] = r[3] * d, m[4] = r[4] * d, m[5] = r[5] * d,
+	m[6] = r[6] * d, m[7] = r[7] * d, m[8] = r[8] * d;
 	
 }
 
@@ -450,7 +534,7 @@ void rotateMatrix3x3(Matrix3x3 m, float angle){
 	float r[] = {
 		c  , s  ,0.0,
 		-s , c  ,0.0,
-		0.0,0.0,1.0,
+		0.0,0.0,1.0
 	};
 	
 	multiplyMatrix3x3(m,r,m);
@@ -537,12 +621,23 @@ void multiplyMatrix4x4(Matrix4x4 m1, Matrix4x4 m2, Matrix4x4 dest){
 		
 }
 
-Vector3 multiplyMatrix4x4Vector(Matrix4x4 m, Vector3 v){
+Vector3 multiplyMatrix4x4Vector3(Matrix4x4 m, Vector3 v){
 
 	return (Vector3){
 		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12],
 		m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13],
 		m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14]
+	};
+	
+}
+
+Vector4 multiplyMatrix4x4Vector4(Matrix4x4 m, Vector4 v){
+
+	return (Vector4){
+		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * v.w,
+		m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13] * v.w,
+		m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14] * v.w,
+		m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15] * v.w
 	};
 	
 }
@@ -558,6 +653,68 @@ void transposeMatrix4x4(Matrix4x4 m){
 	m[4] = m1, m[6] = m9, m[7] = m13,
 	m[8] = m2, m[9] = m6, m[11] = m14,
 	m[12] = m3, m[13] = m7, m[14] = m11;
+	
+}
+
+float determinantMatrix4x4(Matrix4x4 m){
+	
+	float m0 = m[0], m1 = m[1], m2 = m[2], m3 = m[3],
+		m4 = m[4], m5 = m[5], m6 = m[6], m7 = m[7],
+		m8 = m[8], m9 = m[9], m10 = m[10], m11 = m[11],
+		m12 = m[12], m13 = m[13], m14 = m[14], m15 = m[15];
+	
+	float a0 = m10*m15 - m11*m14,
+		a1 = m9*m15 - m11*m13,
+		a2 = m9*m14 - m10*m13,
+		a3 = m8*m15 - m11*m12,
+		a4 = m8*m14 - m10*m12,
+		a5 = m8*m13 - m9*m12;
+		
+	
+	float r1 = (m5 * a0) - (m6 * a1) + (m7 * a2),
+		r2 = (m4 * a0) - (m6 * a3) + (m7 * a4),
+		r3 = (m4 * a1) - (m5 * a3) + (m7 * a5),
+		r4 = (m4 * a2) - (m5 * a4) + (m6 * a5);
+	
+	return m0*r1 - m1*r2 + m2*r3 - m3*r4;
+	
+}
+
+void inverseMatrix4x4(Matrix4x4 m){
+
+	float r[16];
+	
+	float   m0 = m[0], m1 = m[1], m2 = m[2], m3 = m[3],
+			m4 = m[4], m5 = m[5], m6 = m[6], m7 = m[7],
+			m8 = m[8], m9 = m[9], m10 = m[10], m11 = m[11],
+			m12 = m[12], m13 = m[13], m14 = m[14], m15 = m[15];
+	
+	r[0] = (m5*m10*m15 + m6*m11*m13 + m7*m9*m14) - (m7*m10*m13 + m5*m11*m14 + m6*m9*m15);
+	r[1] = - ( (m1*m10*m15 + m2*m11*m13 + m3*m9*m14) - (m3*m10*m13 + m1*m11*m14 + m2*m9*m15) );
+	r[2] = (m1*m6*m15 + m2*m7*m13 + m3*m5*m14) - (m3*m6*m13 + m1*m7*m14 + m2*m5*m15);
+	r[3] = - ( (m1*m6*m11 + m2*m7*m9 + m3*m5*m10) - (m3*m6*m9 + m1*m7*m10 + m2*m5*m11) );
+	
+	r[4] = - ( (m4*m10*m15 + m6*m11*m12 + m7*m8*m14) - (m7*m10*m12 + m4*m11*m14 + m6*m8*m15) );
+	r[5] = (m0*m10*m15 + m2*m11*m12 + m3*m8*m14) - (m3*m10*m12 + m0*m11*m14 + m2*m8*m15);
+	r[6] = - ( (m0*m6*m15 + m2*m7*m12 + m3*m4*m14) - (m3*m6*m12 + m0*m7*m14 + m2*m4*m15) );
+	r[7] = (m0*m6*m11 + m2*m7*m8 + m3*m4*m10) - (m3*m6*m8 + m0*m7*m10 + m2*m4*m11);
+	
+	r[8] = (m4*m9*m15 + m5*m11*m12 + m7*m8*m13) - (m7*m9*m12 + m4*m11*m13 + m5*m8*m15);
+	r[9] = - ( (m0*m9*m15 + m1*m11*m12 + m3*m8*m13) - (m3*m9*m12 + m0*m11*m13 + m1*m8*m15) );
+	r[10] = (m0*m5*m15 + m1*m7*m12 + m3*m4*m13) - (m3*m5*m12 + m0*m7*m13 + m1*m4*m15);
+	r[11] = - ((m0*m5*m11 + m1*m7*m8 + m3*m4*m9) - (m3*m5*m8 + m0*m7*m9 + m1*m4*m11) );
+	
+	r[12] = - ( (m4*m9*m14 + m5*m10*m12 + m6*m8*m13) - (m6*m9*m12 + m4*m10*m13 + m5*m8*m14) );
+	r[13] = (m0*m9*m14 + m1*m10*m12 + m2*m8*m13) - (m2*m9*m12 + m0*m10*m13 + m1*m8*m14);
+	r[14] = - ( (m0*m5*m14 + m1*m6*m12 + m2*m4*m13) - (m2*m5*m12 + m0*m6*m13 + m1*m4*m14) );
+	r[15] = (m0*m5*m10 + m1*m6*m8 + m2*m4*m9) - (m2*m5*m8 + m0*m6*m9 + m1*m4*m10);
+	
+	float d = 1.0 / (m0*r[0] + m1*r[4] + m2*r[8] + m3*r[12]);
+	
+	m[0] = r[0] * d, m[1] = r[1] * d, m[2] = r[2] * d, m[3] = r[3] * d,
+	m[4] = r[4] * d, m[5] = r[5] * d, m[6] = r[6] * d, m[7] = r[7] * d,
+	m[8] = r[8] * d, m[9] = r[9] * d, m[10] = r[10] * d, m[11] = r[11] * d,
+	m[12] = r[12] * d, m[13] = r[13] * d, m[14] = r[14] * d, m[15] = r[15] * d;
 	
 }
 
