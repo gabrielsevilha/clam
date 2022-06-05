@@ -376,7 +376,7 @@ float angleVector4(Vector4 v1, Vector4 v2){
 	
 }
 
-//Matrix3x3P
+//Matrix3x3
 
 Matrix3x3P createMatrix3x3(float major_value){
 
@@ -442,11 +442,11 @@ void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
 		
 }
 
-Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v){
+Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z){
 
 	return (Vector2){
-		m[0] * v.x + m[3] * v.y + m[6],
-		m[1] * v.x + m[4] * v.y + m[7]
+		m[0] * v.x + m[3] * v.y + z * m[6],
+		m[1] * v.x + m[4] * v.y + z * m[7]
 	};
 	
 }
@@ -550,7 +550,7 @@ void rotateMatrix3x3(Matrix3x3P m, float angle){
 
 }
 
-//Matrix4x4P
+//Matrix4x4
 
 Matrix4x4P createMatrix4x4(float major_value){
 
@@ -630,12 +630,12 @@ void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
 		
 }
 
-Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v){
+Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w){
 
 	return (Vector3){
-		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12],
-		m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13],
-		m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14]
+		m[0] * v.x + m[4] * v.y + m[8] * v.z + w * m[12],
+		m[1] * v.x + m[5] * v.y + m[9] * v.z + w * m[13],
+		m[2] * v.x + m[6] * v.y + m[10] * v.z + w * m[14]
 	};
 	
 }
@@ -1040,8 +1040,7 @@ Vector3 rgbToHsv(float r, float g, float b){
     float cmax = fmax(r, fmax(g, b));
     float cmin = fmin(r, fmin(g, b));
     float diff = cmax - cmin;
-    float h = -1;
-    float s = -1;
+    float h = -1, s = -1;
     
     if (cmax == cmin)
         h = 0;
@@ -1068,8 +1067,7 @@ Vector3 hsvToRgb(float h, float s,float v){
 	if(h > 360 || h < 0 || s > 100 || s < 0 || v > 100 || v < 0)
 		return (Vector3){0,0,0};
 
-	float _s = s / 100.0f;
-	float _v = v / 100.0f;
+	float _s = s / 100.0f, _v = v / 100.0f;
 	float c = _s * _v;
 	float x = c * ( 1 - fabs( fmod( h/60.0, 2) - 1 ) );
 
