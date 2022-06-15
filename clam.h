@@ -84,6 +84,12 @@ Vector2 createCopyVector2(Vector2 v){
 
 }
 
+Vector2 negateVector2(Vector2 v){
+
+	return (Vector2){-v.x, -v.y};
+
+}
+
 Vector2 sumVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x+v2.x, v1.y+v2.y};
@@ -183,6 +189,12 @@ Vector3 createVector3(float x, float y, float z){
 Vector3 createCopyVector3(Vector3 v){
 
 	return (Vector3){v.x, v.y ,v.z};
+
+}
+
+Vector3 negateVector3(Vector3 v){
+
+	return (Vector3){-v.x, -v.y, -v.z};
 
 }
 
@@ -287,6 +299,12 @@ Vector4 createVector4(float x, float y, float z, float w){
 Vector4 createCopyVector4(Vector4 v){
 
 	return (Vector4){v.x, v.y, v.z, v.w};
+
+}
+
+Vector4 negateVector4(Vector4 v){
+
+	return (Vector4){-v.x, -v.y, -v.z, -v.w};
 
 }
 
@@ -445,8 +463,8 @@ void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
 Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z){
 
 	return (Vector2){
-		m[0] * v.x + m[3] * v.y + z * m[6],
-		m[1] * v.x + m[4] * v.y + z * m[7]
+		m[0] * v.x + m[3] * v.y + m[6] * z,
+		m[1] * v.x + m[4] * v.y + m[7] * z
 	};
 	
 }
@@ -633,9 +651,9 @@ void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
 Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w){
 
 	return (Vector3){
-		m[0] * v.x + m[4] * v.y + m[8] * v.z + w * m[12],
-		m[1] * v.x + m[5] * v.y + m[9] * v.z + w * m[13],
-		m[2] * v.x + m[6] * v.y + m[10] * v.z + w * m[14]
+		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * w,
+		m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13] * w,
+		m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14] * w
 	};
 	
 }
@@ -995,6 +1013,20 @@ void printMatrix4x4(Matrix4x4P m){
 }
 
 //Extra
+
+int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance){
+	
+	float d = dotVector3(direction, plane_normal);
+	float p1 = dotVector3(plane_position, negateVector3(plane_normal));
+	float p2 = dotVector3(origin, plane_normal);
+	
+	*distance = -(p1 + p2) / d;
+	
+	if(*distance >= 0.0f) return 1;
+	
+	return 0;
+	
+}
 
 int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, float* d, float* u, float* v){
 
