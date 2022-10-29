@@ -41,8 +41,12 @@
 
 #define INIT_MATRIX_3X3 {1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0}
 #define INIT_ZERO_MATRIX_3X3 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+
 #define INIT_MATRIX_4X4 {1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0}
 #define INIT_ZERO_MATRIX_4X4 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+
+#define INIT_QUATERNION {0.0,0.0,0.0,1.0}
+#define INIT_ZERO_QUATERNION {0.0,0.0,0.0,0.0}
 
 typedef struct Vector2{
 
@@ -69,6 +73,12 @@ typedef float Matrix4x4[16];
 typedef float* Matrix3x3P;
 
 typedef float* Matrix4x4P;
+
+typedef struct Quaternion{
+
+	float x, y, z, w;
+
+}Quaternion;
 
 //Vector2
 
@@ -112,6 +122,12 @@ Vector2 divVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x/v2.x, v1.y/v2.y};
 
+}
+
+Vector2 scaleVector2(Vector2 v, float s){
+	
+	return (Vector2){v.x*s, v.y*s};
+	
 }
 
 Vector2 lerpVector2(Vector2 from, Vector2 dest, float t){
@@ -222,6 +238,12 @@ Vector3 divVector3(Vector3 v1, Vector3 v2){
 
 }
 
+Vector3 scaleVector3(Vector3 v, float s){
+
+	return (Vector3){v.x*s, v.y*s, v.z*s};
+
+}
+
 Vector3 lerpVector3(Vector3 from, Vector3 dest, float t){
 
 	Vector3 v = from;
@@ -329,6 +351,12 @@ Vector4 mulVector4(Vector4 v1, Vector4 v2){
 Vector4 divVector4(Vector4 v1, Vector4 v2){
 
 	return (Vector4){v1.x/v2.x, v1.y/v2.y, v1.z/v2.z, v1.w/v2.w};
+
+}
+
+Vector4 scaleVector4(Vector4 v, float s){
+
+	return (Vector4){v.x*s, v.y*s, v.z*s, v.w*s};
 
 }
 
@@ -850,6 +878,99 @@ void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v){
 
 }
 
+//Quaternions
+
+Quaternion createQuaternion(float x, float y, float z, float w){
+	
+	return (Quaternion) {x, y, z, w};
+
+}
+
+Quaternion createCopyQuaternion(Quaternion q){
+
+	return (Quaternion) {q.x, q.y, q.z, q.w};
+	
+}
+
+Quaternion initQuaternionAxis(float angle, Vector3 axis){
+	
+	Vector3 n = normalizeVector3(axis);
+	
+	float a = angle * 0.5f;
+	float s = sinf(a);
+	float c = cosf(a);
+	
+	return (Quaternion){ s * n.x, s * n.y, s * n.z, c };
+	
+}
+
+float dotQuaternion(Quaternion q1, Quaternion q2){
+	
+	Vector4 v0 = (Vector4){q1.x, q1.y, q1.z, q1.w};
+	Vector4 v1 = (Vector4){q2.x, q2.y, q2.z, q2.w};
+	
+	return dotVector4(v0,v1);
+	
+}
+
+Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t){
+	
+	Vector4 v0 = (Vector4){from.x, from.y, from.z, from.w};
+	Vector4 v1 = (Vector4){dest.x, dest.y, dest.z, dest.w};
+	
+	Vector4 r = lerpVector4(v0, v1, t);
+	
+	return (Quaternion){r.x, r.y, r.z, r.w};
+	
+}
+
+Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
+
+	Vector4 v0 = (Vector4){from.x, from.y, from.z, from.w};
+	Vector4 v1 = (Vector4){dest.x, dest.y, dest.z, dest.w};
+	
+	float cos_theta = dotQuaternion(from, dest);
+	
+	if(fabsf(cos_theta) >= 1.0f){
+		return from;
+	}
+	
+	if(cos_theta < 0.0){
+		negateVector4(v0);
+		cos_theta = -cos_theta;
+	}
+	
+	float sin_theta = sqrtf(1.0f - cos_theta * cos_theta);
+	
+	if(fabsf(sin_theta) < 0.0001f){
+		return lerpQuaternion(from,dest,t);
+	}
+	
+	float angle = acosf(cos_theta);
+	
+	v0 = scaleVector4(v0, sinf((1.0f - t) * angle));
+	v1 = scaleVector4(v1, sinf(t * angle));
+	v0 = sumVector4(v0, v1);
+	v0 = scaleVector4(v0, 1.0f/sin_theta);
+	
+	return (Quaternion){v0.x, v0.y, v0.z, v0.w};
+	
+}
+
+void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
+	
+	float x = q.x, y = q.y, z = q.z, w = q.w;
+	
+	dest[3] = 0.0f,
+	dest[7] = 0.0f,
+	dest[11] = 0.0f,
+	dest[12] = 0.0f,
+	dest[13] = 0.0f,
+	dest[14] = 0.0f,
+	dest[15] = 1.0f;
+	
+}
+
 //Camera
 
 void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m){
@@ -1010,6 +1131,12 @@ void printMatrix4x4(Matrix4x4P m){
 		m[12],m[13],m[14],m[15]
 	);
 
+}
+
+void printQuaternion(Quaternion q){
+	
+	printf("%f %f %f %f\n",q.x,q.y,q.z,q.w);
+	
 }
 
 //Extra
