@@ -1053,8 +1053,8 @@ void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
 	dest[9] = yz + wx,
 	dest[10] = 1.0f - xx - yy,
 	dest[11] = 0.0f,
-	dest[12] = 0.0f,
 	
+	dest[12] = 0.0f,
 	dest[13] = 0.0f,
 	dest[14] = 0.0f,
 	dest[15] = 1.0f;
