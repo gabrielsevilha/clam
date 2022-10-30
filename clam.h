@@ -172,6 +172,12 @@ float dotVector2(Vector2 v1, Vector2 v2){
 
 }
 
+float normVector2(Vector2 v){
+
+	return sqrtf(dotVector2(v, v));
+	
+}
+
 float distanceVector2(Vector2 v1, Vector2 v2){
 
 	return sqrt( pow(v1.x-v2.x,2.0f) + pow(v1.y-v2.y,2.0f) );
@@ -288,6 +294,12 @@ float dotVector3(Vector3 v1, Vector3 v2){
 
 }
 
+float normVector3(Vector3 v){
+
+	return sqrtf(dotVector3(v, v));
+
+}
+
 float distanceVector3(Vector3 v1, Vector3 v2){
 
 	return sqrt( pow(v1.x-v2.x,2.0f) + pow(v1.y-v2.y,2.0f) + pow(v1.z-v2.z,2.0f) );
@@ -397,6 +409,12 @@ Vector4 reflectVector4(Vector4 d, Vector4 n){
 float dotVector4(Vector4 v1, Vector4 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z + v1.w*v2.w);
+
+}
+
+float normVector4(Vector4 v){
+
+	return sqrtf(dotVector4(v,v));
 
 }
 
@@ -904,12 +922,34 @@ Quaternion initQuaternionAxis(float angle, Vector3 axis){
 	
 }
 
+Quaternion normalizeQuaternion(Quaternion q){
+
+	Vector4 s = (Vector4){q.x, q.y, q.z, q.w};
+	
+	float d = dotVector4(s,s);
+	
+	if(d <= 0.0f){
+		return (Quaternion) INIT_QUATERNION;
+	}
+	
+	s = scaleVector4(s, 1.0f / sqrtf(d));
+
+	return (Quaternion){s.x, s.y, s.z, s.w};
+
+}
+
 float dotQuaternion(Quaternion q1, Quaternion q2){
 	
 	Vector4 v0 = (Vector4){q1.x, q1.y, q1.z, q1.w};
 	Vector4 v1 = (Vector4){q2.x, q2.y, q2.z, q2.w};
 	
 	return dotVector4(v0,v1);
+	
+}
+
+float normQuaternion(Quaternion q){
+	
+	return sqrtf(dotQuaternion(q,q));
 	
 }
 
@@ -935,14 +975,14 @@ Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
 		return from;
 	}
 	
-	if(cos_theta < 0.0){
-		negateVector4(v0);
+	if(cos_theta < 0.0f){
+		v0 = negateVector4(v0);
 		cos_theta = -cos_theta;
 	}
 	
 	float sin_theta = sqrtf(1.0f - cos_theta * cos_theta);
 	
-	if(fabsf(sin_theta) < 0.0001f){
+	if(fabsf(sin_theta) < 0.001f){
 		return lerpQuaternion(from,dest,t);
 	}
 	
@@ -957,14 +997,64 @@ Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
 	
 }
 
+void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest){
+	
+	float x = q.x, y = q.y, z = q.z, w = q.w;
+	
+	float s = 0.0f, norm = normQuaternion(q);
+	
+	if(norm > 0.0f){
+		s = 2.0f / norm;
+	}
+	
+	float xx = s * x * x, yy = s * y * y, zz = s * z * z,
+		xy = s * x * y, yz = s * y * z, xz = s * x * z,
+		wx = s * w * x, wy = s * w * y, wz = s * w * z;
+	
+	dest[0] = 1.0f - yy - zz;
+	dest[1] = xy - wz;
+	dest[2] = xz + wy;
+	
+	dest[3] = xy + wz;
+	dest[4] = 1.0f - xx - zz;
+	dest[5] = yz - wx;
+	
+	dest[6] = xz - wy;
+	dest[7] = yz + wx;
+	dest[8] = 1.0f - xx - yy;
+	
+}
+
 void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
 	
 	float x = q.x, y = q.y, z = q.z, w = q.w;
 	
+	float s = 0.0f, norm = normQuaternion(q);
+	
+	if(norm > 0.0f){
+		s = 2.0f / norm;
+	}
+	
+	float xx = s * x * x, yy = s * y * y, zz = s * z * z,
+		xy = s * x * y, yz = s * y * z, xz = s * x * z,
+		wx = s * w * x, wy = s * w * y, wz = s * w * z;
+	
+	dest[0] = 1.0f - yy - zz,
+	dest[1] = xy - wz,
+	dest[2] = xz + wy,
 	dest[3] = 0.0f,
+	
+	dest[4] = xy + wz,
+	dest[5] = 1.0f - xx - zz,
+	dest[6] = yz - wx,
 	dest[7] = 0.0f,
+	
+	dest[8] = xz - wy,
+	dest[9] = yz + wx,
+	dest[10] = 1.0f - xx - yy,
 	dest[11] = 0.0f,
 	dest[12] = 0.0f,
+	
 	dest[13] = 0.0f,
 	dest[14] = 0.0f,
 	dest[15] = 1.0f;
