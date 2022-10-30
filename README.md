@@ -9,10 +9,10 @@
 
     Vector3 v = {0.0, 0.0, 0.0};
     
-    Matrix4x4 p = createMatrix4x4(1.0);
+    Matrix4x4 p = INIT_MATRIX_4X4;
     perspectiveMatrix(70.0f, width/height, 0.1f, 1000.0f, p);
     
-    Matrix4x4 a = createMatrix4x4(1.0);
+    Matrix4x4 a = INIT_MATRIX_4X4;
     lookatMatrix((Vector3){0.0,0.0,1.0},(Vector3){0.0,0.0,0.0},(Vector3){0.0,1.0,0.0}, a);
     
     //Send to opengl
