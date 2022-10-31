@@ -160,8 +160,8 @@ Vector2 reflectVector2(Vector2 d, Vector2 n){
 	float dot = d.x*n.x + d.y*n.y;
 	
 	return (Vector2){
-		d.x - 2.0 * (dot * n.x),
-		d.y - 2.0 * (dot * n.y)
+		d.x - 2.0f * (dot * n.x),
+		d.y - 2.0f * (dot * n.y)
 	};
 	
 }
@@ -196,7 +196,7 @@ float angleVector2(Vector2 v1, Vector2 v2){
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y);
 	float v2_lenght = sqrt(v2.x*v2.x + v2.y*v2.y);
 	
-	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323846f;
+	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323f;
 	
 }
 
@@ -281,9 +281,9 @@ Vector3 reflectVector3(Vector3 d, Vector3 n){
 	float dot = d.x*n.x + d.y*n.y + d.z*n.z;
 	
 	return (Vector3){
-		d.x - 2.0 * (dot * n.x),
-		d.y - 2.0 * (dot * n.y),
-		d.z - 2.0 * (dot * n.z)
+		d.x - 2.0f * (dot * n.x),
+		d.y - 2.0f * (dot * n.y),
+		d.z - 2.0f * (dot * n.z)
 	};
 	
 }
@@ -318,7 +318,7 @@ float angleVector3(Vector3 v1, Vector3 v2){
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z);
 	float v2_lenght = sqrt(v2.x*v2.x + v2.y*v2.y + v2.z*v2.z);
 	
-	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323846f;
+	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323f;
 	
 }
 
@@ -398,10 +398,10 @@ Vector4 reflectVector4(Vector4 d, Vector4 n){
 	float dot = d.x*n.x + d.y*n.y + d.z*n.z + d.w*d.w;
 	
 	return (Vector4){
-		d.x - 2.0 * (dot * n.x),
-		d.y - 2.0 * (dot * n.y),
-		d.z - 2.0 * (dot * n.z),
-		d.w - 2.0 * (dot * n.w)
+		d.x - 2.0f * (dot * n.x),
+		d.y - 2.0f * (dot * n.y),
+		d.z - 2.0f * (dot * n.z),
+		d.w - 2.0f * (dot * n.w)
 	};
 	
 }
@@ -436,7 +436,7 @@ float angleVector4(Vector4 v1, Vector4 v2){
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z + v1.w*v1.w);
 	float v2_lenght = sqrt(v2.x*v2.x + v2.y*v2.y + v2.z*v2.z + v2.w*v2.w);
 	
-	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323846f;
+	return acosf(dot * (1.0f / (v1_lenght * v2_lenght))) * 180.0f/3.14159265358979323f;
 	
 }
 
@@ -922,6 +922,46 @@ Quaternion initQuaternionAxis(float angle, Vector3 axis){
 	
 }
 
+Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2){
+
+	return (Quaternion){
+		q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+		q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x,
+		q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w,
+		q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z
+	};
+
+}
+
+Quaternion anglesToQuaternion(Vector3 angles){
+	
+	float rad = 3.14159265358979323f / 180.0f;
+	
+	Quaternion qx = initQuaternionAxis(angles.x * rad, (Vector3){1.0f,0.0f,0.0f});
+	Quaternion qy = initQuaternionAxis(angles.y * rad, (Vector3){0.0f,1.0f,0.0f});
+	Quaternion qz = initQuaternionAxis(angles.z * rad, (Vector3){0.0f,0.0f,1.0f});
+	
+	Quaternion q0 = multiplyQuaternion(qz,qy);
+	Quaternion qr = multiplyQuaternion(q0,qx);
+	
+	return qr;
+	
+}
+
+Vector3 quaternionToAngles(Quaternion q){
+	
+	float deg = 180.0f / 3.14159265358979323f;
+	
+	float s = 2.0f * (q.w * q.y - q.z * q.x);
+	
+	return (Vector3){
+		atan2f(2.0f * (q.w * q.x + q.y * q.z), 1.0f - 2.0f * (q.x * q.x + q.y * q.y)) * deg,
+		( fabsf(s) >= 1.0f ? copysignf(3.14159265358979323f / 2.0f, s) : asinf(s) ) * deg,
+		atan2f(2.0f * (q.w * q.z + q.x * q.y), 1.0f - 2.0f * (q.y * q.y + q.z * q.z)) * deg
+	};
+	
+}
+
 Quaternion normalizeQuaternion(Quaternion q){
 
 	Vector4 s = (Vector4){q.x, q.y, q.z, q.w};
@@ -1081,7 +1121,7 @@ void orthographicMatrix(float left, float right, float bottom, float top, float 
 
 void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m){
 
-	fov *= 3.14159265358979323846f/180.0f;
+	fov *= 3.14159265358979323f/180.0f;
 
 	float tan_half_fov = tanf( fov / 2.0f );
 	float dif_far_near = far - near;
@@ -1121,13 +1161,13 @@ void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m){
 
 float degToRad(float angle){
 
-	return angle * 3.14159265358979323846f / 180.0f;
+	return angle * 3.14159265358979323f / 180.0f;
 
 }
 
 float radToDeg(float angle){
 
-	return angle * 180.0f / 3.14159265358979323846f;
+	return angle * 180.0f / 3.14159265358979323f;
 
 }
 
@@ -1164,6 +1204,12 @@ int compVector3(Vector3 v1, Vector3 v2){
 int compVector4(Vector4 v1, Vector4 v2){
 	
 	return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z && v1.w == v2.w);
+	
+}
+
+int compQuaternion(Quaternion q1, Quaternion q2){
+	
+	return (q1.x == q2.x && q1.y == q2.y && q1.z == q2.z && q1.w == q2.w);
 	
 }
 
