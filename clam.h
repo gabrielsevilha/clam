@@ -1052,15 +1052,15 @@ void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest){
 		wx = s * w * x, wy = s * w * y, wz = s * w * z;
 	
 	dest[0] = 1.0f - yy - zz;
-	dest[1] = xy - wz;
-	dest[2] = xz + wy;
+	dest[1] = xy + wz;
+	dest[2] = xz - wy;
 	
-	dest[3] = xy + wz;
+	dest[3] = xy - wz;
 	dest[4] = 1.0f - xx - zz;
-	dest[5] = yz - wx;
+	dest[5] = yz + wx;
 	
-	dest[6] = xz - wy;
-	dest[7] = yz + wx;
+	dest[6] = xz + wy;
+	dest[7] = yz - wx;
 	dest[8] = 1.0f - xx - yy;
 	
 }
@@ -1080,17 +1080,17 @@ void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
 		wx = s * w * x, wy = s * w * y, wz = s * w * z;
 	
 	dest[0] = 1.0f - yy - zz,
-	dest[1] = xy - wz,
-	dest[2] = xz + wy,
+	dest[1] = xy + wz,
+	dest[2] = xz - wy,
 	dest[3] = 0.0f,
 	
-	dest[4] = xy + wz,
+	dest[4] = xy - wz,
 	dest[5] = 1.0f - xx - zz,
-	dest[6] = yz - wx,
+	dest[6] = yz + wx,
 	dest[7] = 0.0f,
 	
-	dest[8] = xz - wy,
-	dest[9] = yz + wx,
+	dest[8] = xz + wy,
+	dest[9] = yz - wx,
 	dest[10] = 1.0f - xx - yy,
 	dest[11] = 0.0f,
 	
