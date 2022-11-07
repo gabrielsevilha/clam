@@ -1,0 +1,304 @@
+//========================= Usage example: =========================
+
+	Vector3 v = {0.0, 0.0, 0.0};
+
+	Matrix4x4 p = INIT_MATRIX_4X4;
+	perspectiveMatrix(70.0f, width/height, 0.1f, 1000.0f, p);
+
+	Matrix4x4 a = INIT_MATRIX_4X4;
+	lookatMatrix((Vector3){0.0,0.0,1.0},(Vector3){0.0,0.0,0.0},(Vector3){0.0,1.0,0.0}, a);
+
+	//Send to opengl
+	glUniformMatrix4fv(glGetUniformLocation(shader_program,"projection"), 1, GL_FALSE, p);
+
+	//Matrix multiplication order (MVP = projection x view x model)
+	Matrix4x4 MVP = INIT_MATRIX_4X4;
+	multiplyMatrix4x4(projection, view, MVP);
+	multiplyMatrix4x4(MVP, model, MVP);
+
+//========================= Constants: =========================
+
+	INIT_MATRIX_3X3 {1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0}
+	
+	INIT_ZERO_MATRIX_3X3 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+
+	INIT_MATRIX_4X4 {1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0}
+	
+	INIT_ZERO_MATRIX_4X4 {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}
+
+	INIT_QUATERNION {0.0,0.0,0.0,1.0}
+	
+	INIT_ZERO_QUATERNION {0.0,0.0,0.0,0.0}
+
+//========================= Types: =========================
+
+	typedef struct Vector2 // float x y
+	typedef struct Vector3 // float x y z
+	typedef struct Vector4 // float x y z w
+
+	typedef float Matrix3x3[9];
+	typedef float Matrix4x4[16];
+
+	typedef float* Matrix3x3P;
+	typedef float* Matrix4x4P;
+
+	typedef struct Quaternion; // float x y z w
+
+	Vector2 createVector2(float x, float y)
+	
+	Vector2 createCopyVector2(Vector2 v)
+	
+	Vector2 negateVector2(Vector2 v)
+	
+	Vector2 sumVector2(Vector2 v1, Vector2 v2)
+	
+	Vector2 subVector2(Vector2 v1, Vector2 v2)
+	
+	Vector2 mulVector2(Vector2 v1, Vector2 v2)
+	
+	Vector2 divVector2(Vector2 v1, Vector2 v2)
+	
+	Vector2 scaleVector2(Vector2 v, float s)
+	
+	Vector2 lerpVector2(Vector2 from, Vector2 dest, float t)
+	
+	Vector2 normalizeVector2(Vector2 v)
+	
+	float crossVector2(Vector2 v1, Vector2 v2)
+	
+	Vector2 reflectVector2(Vector2 d, Vector2 n)
+	
+	float dotVector2(Vector2 v1, Vector2 v2)
+	
+	float normVector2(Vector2 v)
+	
+	float distanceVector2(Vector2 v1, Vector2 v2)
+	
+	float lengthVector2(Vector2 v)
+	
+	float angleVector2(Vector2 v1, Vector2 v2)
+	
+
+//========================= Vector3: =========================
+
+	Vector3 createVector3(float x, float y, float z)
+	
+	Vector3 createCopyVector3(Vector3 v)
+	
+	Vector3 negateVector3(Vector3 v)
+	
+	Vector3 sumVector3(Vector3 v1, Vector3 v2)
+	
+	Vector3 subVector3(Vector3 v1, Vector3 v2)
+	
+	Vector3 mulVector3(Vector3 v1, Vector3 v2)
+	
+	Vector3 divVector3(Vector3 v1, Vector3 v2)
+	
+	Vector3 scaleVector3(Vector3 v, float s)
+	
+	Vector3 lerpVector3(Vector3 from, Vector3 dest, float t)
+	
+	Vector3 normalizeVector3(Vector3 v)
+	
+	Vector3 crossVector3(Vector3 v1, Vector3 v2)
+	
+	Vector3 reflectVector3(Vector3 d, Vector3 n)
+	
+	float dotVector3(Vector3 v1, Vector3 v2)
+	
+	float normVector3(Vector3 v)
+	
+	float distanceVector3(Vector3 v1, Vector3 v2)
+	
+	float lengthVector3(Vector3 v)
+	
+	float angleVector3(Vector3 v1, Vector3 v2)
+	
+
+//========================= Vector4: =========================
+
+	Vector4 createVector4(float x, float y, float z, float w)
+	
+	Vector4 createCopyVector4(Vector4 v)
+	
+	Vector4 negateVector4(Vector4 v)
+	
+	Vector4 sumVector4(Vector4 v1, Vector4 v2)
+	
+	Vector4 subVector4(Vector4 v1, Vector4 v2)
+	
+	Vector4 mulVector4(Vector4 v1, Vector4 v2)
+	
+	Vector4 divVector4(Vector4 v1, Vector4 v2)
+	
+	Vector4 scaleVector4(Vector4 v, float s)
+	
+	Vector4 lerpVector4(Vector4 from, Vector4 dest, float t)
+	
+	Vector4 normalizeVector4(Vector4 v)
+	
+	Vector4 reflectVector4(Vector4 d, Vector4 n)
+	
+	float dotVector4(Vector4 v1, Vector4 v2)
+	
+	float normVector4(Vector4 v)
+	
+	float distanceVector4(Vector4 v1, Vector4 v2)
+	
+	float lengthVector4(Vector4 v)
+	
+	float angleVector4(Vector4 v1, Vector4 v2)
+	
+
+//========================= Matrix3x3: =========================
+
+	Matrix3x3P createMatrix3x3(float major_value)
+	
+	Matrix3x3P createCopyMatrix3x3(Matrix3x3P m)
+	
+	void copyMatrix3x3(Matrix3x3P src, Matrix3x3P dest)
+	
+	void identityMatrix3x3(Matrix3x3P m)
+	
+	void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest)
+	
+	Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z)
+	
+	Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v)
+	
+	void transposeMatrix3x3(Matrix3x3P m)
+	
+	float determinantMatrix3x3(Matrix3x3P m)
+	
+	void inverseMatrix3x3(Matrix3x3P m)
+	
+	void translateMatrix3x3(Matrix3x3P m, Vector2 v)
+	
+	void scaleMatrix3x3(Matrix3x3P m, Vector2 v)
+	
+	void rotateMatrix3x3(Matrix3x3P m, float angle)
+	
+
+//========================= Matrix4x4: =========================
+
+	Matrix4x4P createMatrix4x4(float major_value)
+	
+	Matrix4x4P createCopyMatrix4x4(Matrix4x4P m)
+	
+	void copyMatrix4x4(Matrix4x4P src, Matrix4x4P dest)
+	
+	void identityMatrix4x4(Matrix4x4P m)
+	
+	void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest)
+	
+	Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w)
+	
+	Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v)
+	
+	void transposeMatrix4x4(Matrix4x4P m)
+	
+	float determinantMatrix4x4(Matrix4x4P m)
+	
+	void inverseMatrix4x4(Matrix4x4P m)
+	
+	void translateMatrix4x4(Matrix4x4P m, Vector3 v)
+	
+	void scaleMatrix4x4(Matrix4x4P m, Vector3 v)
+	
+	void rotateXMatrix4x4(Matrix4x4P m, float angle)
+	
+	void rotateYMatrix4x4(Matrix4x4P m, float angle)
+	
+	void rotateZMatrix4x4(Matrix4x4P m, float angle)
+	
+	void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v)
+	
+
+//========================= Quaternions: =========================
+
+	Quaternion createQuaternion(float x, float y, float z, float w)
+	
+	Quaternion createCopyQuaternion(Quaternion q)
+	
+	Quaternion initQuaternionAxis(float angle, Vector3 axis)
+	
+	Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2)
+	
+	Quaternion anglesToQuaternion(Vector3 angles)
+	
+	Vector3 quaternionToAngles(Quaternion q)
+	
+	Quaternion normalizeQuaternion(Quaternion q)
+	
+	float dotQuaternion(Quaternion q1, Quaternion q2)
+	
+	float normQuaternion(Quaternion q)
+	
+	Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t)
+	
+	Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t)
+	
+	void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest)
+	
+	void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest)
+	
+
+//========================= Camera: =========================
+
+	void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m)
+	
+	void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m)
+	
+	void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m)
+	
+
+//========================= Utils: =========================
+
+	float degToRad(float angle)
+	
+	float radToDeg(float angle)
+	
+	Vector2 arrayToVector2(float v[2])
+	
+	Vector3 arrayToVector3(float v[3])
+	
+	Vector4 arrayToVector4(float v[4])
+	
+	int compVector2(Vector2 v1, Vector2 v2)
+	
+	int compVector3(Vector3 v1, Vector3 v2)
+	
+	int compVector4(Vector4 v1, Vector4 v2)
+	
+	int compQuaternion(Quaternion q1, Quaternion q2)
+	
+	int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2)
+	
+	int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2)
+	
+	void printVector2(Vector2 v)
+	
+	void printVector3(Vector3 v)
+	
+	void printVector4(Vector4 v)
+	
+	void printMatrix3x3(Matrix3x3P m)
+	
+	void printMatrix4x4(Matrix4x4P m)
+	
+	void printQuaternion(Quaternion q)
+	
+
+//========================= Extra: =========================
+
+	int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance)
+	
+	int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, float* d, float* u, float* v)
+	
+	Vector3 rgbToHsv(float r, float g, float b)
+	
+	Vector3 hsvToRgb(float h, float s,float v)
+	
+//============================================================
+
