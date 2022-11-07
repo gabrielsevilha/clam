@@ -18,4 +18,9 @@
     //Send to opengl
     glUniformMatrix4fv(glGetUniformLocation(shader_program,"projection"), 1, GL_FALSE, p);
 
+    //Matrix multiplication order (MVP = projection x view x model)
+    Matrix4x4 MVP = INIT_MATRIX_4X4;
+    multiplyMatrix4x4(projection, view, MVP);
+    multiplyMatrix4x4(MVP, model, MVP);
+  
 ```
