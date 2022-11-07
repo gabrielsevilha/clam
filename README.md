@@ -25,3 +25,11 @@
     multiplyMatrix4x4(projection, view, MVP);
     multiplyMatrix4x4(MVP, model, MVP);
 ```
+#### Transform:
+```C
+    Matrix4x4 m = INIT_MATRIX_4X4;
+    identityMatrix4x4(m);
+    translateMatrix4x4(m, (Vector3){5.0,10.0,15.0});
+    rotateMatrix4x4(m, degToRad(90.0f), (Vector3){0.0,1.0,0.0});
+    scaleMatrix4x4(m, (Vector3){2.0,2.0,2.0});
+```
