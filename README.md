@@ -5,7 +5,7 @@
   * Unique Header <br>
   * Open Source <br>
 
-#### Usage Exemple:
+#### Usage Example:
 ```C
     Vector3 v = {0.0, 0.0, 0.0};
     
