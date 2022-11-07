@@ -6,7 +6,6 @@
   * Open Source <br>
 
 ```C
-
     Vector3 v = {0.0, 0.0, 0.0};
     
     Matrix4x4 p = INIT_MATRIX_4X4;
@@ -20,7 +19,6 @@
 ```
 
 ```C
-
     //Matrix multiplication order (MVP = projection x view x model)
     Matrix4x4 MVP = INIT_MATRIX_4X4;
     multiplyMatrix4x4(projection, view, MVP);
