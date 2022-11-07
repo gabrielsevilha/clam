@@ -17,7 +17,6 @@
     
     //Send to opengl
     glUniformMatrix4fv(glGetUniformLocation(shader_program,"projection"), 1, GL_FALSE, p);
-    
 ```
 
 ```C
