@@ -39,7 +39,6 @@
 ```C
     Quaternion from = INIT_QUATERNION;
     Quaternion dest = anglesToQuaternion((Vector3){75.0f, 60.0f, 180.0f});
-
     Quaternion result = slerpQuaternion(from, dest, 0.5f);
 
     Matrix4x4 matrix;
