@@ -35,7 +35,7 @@
     rotateMatrix4x4(m, degToRad(90.0f), (Vector3){0.0,1.0,0.0});
     scaleMatrix4x4(m, (Vector3){2.0,2.0,2.0});
 ```
-#### Quaternion:
+#### Quaternions:
 ```C
     Quaternion from = INIT_QUATERNION;
     Quaternion dest = anglesToQuaternion((Vector3){75.0f, 60.0f, 180.0f});
