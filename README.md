@@ -27,8 +27,7 @@
 ```
 #### Transform:
 ```C
-    Matrix4x4 m = INIT_MATRIX_4X4;
-    
+    Matrix4x4 m;
     identityMatrix4x4(m);
     
     translateMatrix4x4(m, (Vector3){5.0,10.0,15.0});
