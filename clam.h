@@ -466,7 +466,7 @@ Matrix3x3P createCopyMatrix3x3(Matrix3x3P m){
 
 }
 
-void copyMatrix3x3(Matrix3x3P src, Matrix3x3P dest){
+void copyMatrix3x3(Matrix3x3P dest, Matrix3x3P src){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2],
 	dest[3] = src[3], dest[4] = src[4], dest[5] = src[5],
@@ -642,7 +642,7 @@ Matrix4x4P createCopyMatrix4x4(Matrix4x4P m){
 
 }
 
-void copyMatrix4x4(Matrix4x4P src, Matrix4x4P dest){
+void copyMatrix4x4(Matrix4x4P dest, Matrix4x4P src){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2], dest[3] = src[3],
 	dest[4] = src[4], dest[5] = src[5], dest[6] = src[6], dest[7] = src[7],
