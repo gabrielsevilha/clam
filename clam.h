@@ -7,7 +7,7 @@
 	
 	MIT License
 
-	Copyright (c) 2020 Gabriel Sevilha
+	Copyright (c) 2020-2022 Gabriel Sevilha
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -1277,6 +1277,32 @@ void printQuaternion(Quaternion q){
 
 //Extra
 
+Vector2 closestPointOnLine2D(Vector2 point, Vector2 v0, Vector2 v1){
+	
+	float line_length = distanceVector2(v0,v1);
+	Vector2 direction = divVector2(subVector2(v1,v0), (Vector2){line_length,line_length});
+	float projection = dotVector2(subVector2(point,v0), direction);
+	
+	if(projection <= 0.0f) return v0;
+	if(projection >= line_length) return v1;
+	
+	return (Vector2){v0.x+direction.x*projection, v0.y+direction.y*projection};
+	
+}
+
+Vector3 closestPointOnLine3D(Vector3 point, Vector3 v0, Vector3 v1){
+	
+	float line_length = distanceVector3(v0,v1);
+	Vector3 direction = divVector3(subVector3(v1,v0), (Vector3){line_length,line_length,line_length});
+	float projection = dotVector3(subVector3(point,v0), direction);
+	
+	if(projection <= 0.0f) return v0;
+	if(projection >= line_length) return v1;
+	
+	return (Vector3){v0.x+direction.x*projection, v0.y+direction.y*projection, v0.z+direction.z*projection};
+	
+}
+
 int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance){
 	
 	float d = dotVector3(direction, plane_normal);
@@ -1357,7 +1383,7 @@ Vector3 rgbToHsv(float r, float g, float b){
     
 }
 
-Vector3 hsvToRgb(float h, float s,float v){
+Vector3 hsvToRgb(float h, float s, float v){
 
 	if(h > 360 || h < 0 || s > 100 || s < 0 || v > 100 || v < 0)
 		return (Vector3){0,0,0};
@@ -1388,3 +1414,4 @@ Vector3 hsvToRgb(float h, float s,float v){
 }
 
 #endif
+
