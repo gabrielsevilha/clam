@@ -1,5 +1,5 @@
 /*
-	Clam (C Linear Algebra Math) By Gabriel Sevilha.
+	Clam 1.2.43 (C Linear Algebra Math) By Gabriel Sevilha.
 	
 	Library created for my own use, but if you like it, you can use it too, feel free to study the code.
 	
@@ -82,55 +82,55 @@ typedef struct Quaternion{
 
 //Vector2
 
-Vector2 createVector2(float x, float y){
+static Vector2 createVector2(float x, float y){
 
 	return (Vector2){x, y};
 
 }
 
-Vector2 createCopyVector2(Vector2 v){
+static Vector2 createCopyVector2(Vector2 v){
 
 	return (Vector2){v.x, v.y};
 
 }
 
-Vector2 negateVector2(Vector2 v){
+static Vector2 negateVector2(Vector2 v){
 
 	return (Vector2){-v.x, -v.y};
 
 }
 
-Vector2 sumVector2(Vector2 v1, Vector2 v2){
+static Vector2 sumVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x+v2.x, v1.y+v2.y};
 
 }
 
-Vector2 subVector2(Vector2 v1, Vector2 v2){
+static Vector2 subVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x-v2.x, v1.y-v2.y};
 
 }
 
-Vector2 mulVector2(Vector2 v1, Vector2 v2){
+static Vector2 mulVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x*v2.x, v1.y*v2.y};
 
 }
 
-Vector2 divVector2(Vector2 v1, Vector2 v2){
+static Vector2 divVector2(Vector2 v1, Vector2 v2){
 
 	return (Vector2){v1.x/v2.x, v1.y/v2.y};
 
 }
 
-Vector2 scaleVector2(Vector2 v, float s){
+static Vector2 scaleVector2(Vector2 v, float s){
 	
 	return (Vector2){v.x*s, v.y*s};
 	
 }
 
-Vector2 lerpVector2(Vector2 from, Vector2 dest, float t){
+static Vector2 lerpVector2(Vector2 from, Vector2 dest, float t){
 
 	Vector2 v = from;
 	
@@ -141,7 +141,7 @@ Vector2 lerpVector2(Vector2 from, Vector2 dest, float t){
 
 }
 
-Vector2 normalizeVector2(Vector2 v){
+static Vector2 normalizeVector2(Vector2 v){
 	
 	float length = sqrt((v.x*v.x)+(v.y*v.y));
 	
@@ -149,13 +149,13 @@ Vector2 normalizeVector2(Vector2 v){
 	
 }
 
-float crossVector2(Vector2 v1, Vector2 v2){
+static float crossVector2(Vector2 v1, Vector2 v2){
 
 	return (v1.x*v2.y - v1.y*v2.x);
 
 }
 
-Vector2 reflectVector2(Vector2 d, Vector2 n){
+static Vector2 reflectVector2(Vector2 d, Vector2 n){
 	
 	float dot = d.x*n.x + d.y*n.y;
 	
@@ -166,31 +166,31 @@ Vector2 reflectVector2(Vector2 d, Vector2 n){
 	
 }
 
-float dotVector2(Vector2 v1, Vector2 v2){
+static float dotVector2(Vector2 v1, Vector2 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y);
 
 }
 
-float normVector2(Vector2 v){
+static float normVector2(Vector2 v){
 
 	return sqrtf(dotVector2(v, v));
 	
 }
 
-float distanceVector2(Vector2 v1, Vector2 v2){
+static float distanceVector2(Vector2 v1, Vector2 v2){
 
 	return sqrt( pow(v1.x-v2.x,2.0f) + pow(v1.y-v2.y,2.0f) );
 
 }
 
-float lengthVector2(Vector2 v){
+static float lengthVector2(Vector2 v){
 	
 	return sqrt((v.x*v.x)+(v.y*v.y));
 	
 }
 
-float angleVector2(Vector2 v1, Vector2 v2){
+static float angleVector2(Vector2 v1, Vector2 v2){
 	
 	float dot = v1.x*v2.x + v1.y*v2.y;
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y);
@@ -202,55 +202,55 @@ float angleVector2(Vector2 v1, Vector2 v2){
 
 //Vector3
 
-Vector3 createVector3(float x, float y, float z){
+static Vector3 createVector3(float x, float y, float z){
 
 	return (Vector3){x, y ,z};
 
 }
 
-Vector3 createCopyVector3(Vector3 v){
+static Vector3 createCopyVector3(Vector3 v){
 
 	return (Vector3){v.x, v.y ,v.z};
 
 }
 
-Vector3 negateVector3(Vector3 v){
+static Vector3 negateVector3(Vector3 v){
 
 	return (Vector3){-v.x, -v.y, -v.z};
 
 }
 
-Vector3 sumVector3(Vector3 v1, Vector3 v2){
+static Vector3 sumVector3(Vector3 v1, Vector3 v2){
 
 	return (Vector3){v1.x+v2.x, v1.y+v2.y, v1.z+v2.z};
 
 }
 
-Vector3 subVector3(Vector3 v1, Vector3 v2){
+static Vector3 subVector3(Vector3 v1, Vector3 v2){
 
 	return (Vector3){v1.x-v2.x, v1.y-v2.y, v1.z-v2.z};
 
 }
 
-Vector3 mulVector3(Vector3 v1, Vector3 v2){
+static Vector3 mulVector3(Vector3 v1, Vector3 v2){
 
 	return (Vector3){v1.x*v2.x, v1.y*v2.y, v1.z*v2.z};
 
 }
 
-Vector3 divVector3(Vector3 v1, Vector3 v2){
+static Vector3 divVector3(Vector3 v1, Vector3 v2){
 
 	return (Vector3){v1.x/v2.x, v1.y/v2.y, v1.z/v2.z};
 
 }
 
-Vector3 scaleVector3(Vector3 v, float s){
+static Vector3 scaleVector3(Vector3 v, float s){
 
 	return (Vector3){v.x*s, v.y*s, v.z*s};
 
 }
 
-Vector3 lerpVector3(Vector3 from, Vector3 dest, float t){
+static Vector3 lerpVector3(Vector3 from, Vector3 dest, float t){
 
 	Vector3 v = from;
 	
@@ -262,7 +262,7 @@ Vector3 lerpVector3(Vector3 from, Vector3 dest, float t){
 
 }
 
-Vector3 normalizeVector3(Vector3 v){
+static Vector3 normalizeVector3(Vector3 v){
 	
 	float length = sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z));
 	
@@ -270,13 +270,13 @@ Vector3 normalizeVector3(Vector3 v){
 	
 }
 
-Vector3 crossVector3(Vector3 v1, Vector3 v2){
+static Vector3 crossVector3(Vector3 v1, Vector3 v2){
 
 	return (Vector3){v1.y*v2.z-v1.z*v2.y, v1.z*v2.x-v1.x*v2.z, v1.x*v2.y-v1.y*v2.x};
 
 }
 
-Vector3 reflectVector3(Vector3 d, Vector3 n){
+static Vector3 reflectVector3(Vector3 d, Vector3 n){
 	
 	float dot = d.x*n.x + d.y*n.y + d.z*n.z;
 	
@@ -288,31 +288,31 @@ Vector3 reflectVector3(Vector3 d, Vector3 n){
 	
 }
 
-float dotVector3(Vector3 v1, Vector3 v2){
+static float dotVector3(Vector3 v1, Vector3 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
 
 }
 
-float normVector3(Vector3 v){
+static float normVector3(Vector3 v){
 
 	return sqrtf(dotVector3(v, v));
 
 }
 
-float distanceVector3(Vector3 v1, Vector3 v2){
+static float distanceVector3(Vector3 v1, Vector3 v2){
 
 	return sqrt( pow(v1.x-v2.x,2.0f) + pow(v1.y-v2.y,2.0f) + pow(v1.z-v2.z,2.0f) );
 
 }
 
-float lengthVector3(Vector3 v){
+static float lengthVector3(Vector3 v){
 	
 	return sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z));
 	
 }
 
-float angleVector3(Vector3 v1, Vector3 v2){
+static float angleVector3(Vector3 v1, Vector3 v2){
 	
 	float dot = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z);
@@ -324,55 +324,55 @@ float angleVector3(Vector3 v1, Vector3 v2){
 
 //Vector4
 
-Vector4 createVector4(float x, float y, float z, float w){
+static Vector4 createVector4(float x, float y, float z, float w){
 
 	return (Vector4){x, y, z, w};
 
 }
 
-Vector4 createCopyVector4(Vector4 v){
+static Vector4 createCopyVector4(Vector4 v){
 
 	return (Vector4){v.x, v.y, v.z, v.w};
 
 }
 
-Vector4 negateVector4(Vector4 v){
+static Vector4 negateVector4(Vector4 v){
 
 	return (Vector4){-v.x, -v.y, -v.z, -v.w};
 
 }
 
-Vector4 sumVector4(Vector4 v1, Vector4 v2){
+static Vector4 sumVector4(Vector4 v1, Vector4 v2){
 
 	return (Vector4){v1.x+v2.x, v1.y+v2.y, v1.z+v2.z, v1.w+v2.w};
 
 }
 
-Vector4 subVector4(Vector4 v1, Vector4 v2){
+static Vector4 subVector4(Vector4 v1, Vector4 v2){
 
 	return (Vector4){v1.x-v2.x, v1.y-v2.y, v1.z-v2.z, v1.w-v2.w};
 
 }
 
-Vector4 mulVector4(Vector4 v1, Vector4 v2){
+static Vector4 mulVector4(Vector4 v1, Vector4 v2){
 
 	return (Vector4){v1.x*v2.x, v1.y*v2.y, v1.z*v2.z, v1.w*v2.w};
 
 }
 
-Vector4 divVector4(Vector4 v1, Vector4 v2){
+static Vector4 divVector4(Vector4 v1, Vector4 v2){
 
 	return (Vector4){v1.x/v2.x, v1.y/v2.y, v1.z/v2.z, v1.w/v2.w};
 
 }
 
-Vector4 scaleVector4(Vector4 v, float s){
+static Vector4 scaleVector4(Vector4 v, float s){
 
 	return (Vector4){v.x*s, v.y*s, v.z*s, v.w*s};
 
 }
 
-Vector4 lerpVector4(Vector4 from, Vector4 dest, float t){
+static Vector4 lerpVector4(Vector4 from, Vector4 dest, float t){
 
 	Vector4 v = from;
 	
@@ -385,7 +385,7 @@ Vector4 lerpVector4(Vector4 from, Vector4 dest, float t){
 
 }
 
-Vector4 normalizeVector4(Vector4 v){
+static Vector4 normalizeVector4(Vector4 v){
 	
 	float length = sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)+(v.w*v.w));
 	
@@ -393,7 +393,7 @@ Vector4 normalizeVector4(Vector4 v){
 	
 }
 
-Vector4 reflectVector4(Vector4 d, Vector4 n){
+static Vector4 reflectVector4(Vector4 d, Vector4 n){
 	
 	float dot = d.x*n.x + d.y*n.y + d.z*n.z + d.w*d.w;
 	
@@ -406,31 +406,31 @@ Vector4 reflectVector4(Vector4 d, Vector4 n){
 	
 }
 
-float dotVector4(Vector4 v1, Vector4 v2){
+static float dotVector4(Vector4 v1, Vector4 v2){
 
 	return (float)(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z + v1.w*v2.w);
 
 }
 
-float normVector4(Vector4 v){
+static float normVector4(Vector4 v){
 
 	return sqrtf(dotVector4(v,v));
 
 }
 
-float distanceVector4(Vector4 v1, Vector4 v2){
+static float distanceVector4(Vector4 v1, Vector4 v2){
 
 	return sqrt( pow(v1.x-v2.x,2.0f) + pow(v1.y-v2.y,2.0f) + pow(v1.z-v2.z,2.0f) + pow(v1.w-v2.w,2.0f) );
 
 }
 
-float lengthVector4(Vector4 v){
+static float lengthVector4(Vector4 v){
 	
 	return sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)+(v.w*v.w));
 	
 }
 
-float angleVector4(Vector4 v1, Vector4 v2){
+static float angleVector4(Vector4 v1, Vector4 v2){
 	
 	float dot = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z + v1.w*v2.w;
 	float v1_lenght = sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z + v1.w*v1.w);
@@ -442,7 +442,7 @@ float angleVector4(Vector4 v1, Vector4 v2){
 
 //Matrix3x3
 
-Matrix3x3P createMatrix3x3(float major_value){
+static Matrix3x3P createMatrix3x3(float major_value){
 
 	Matrix3x3P m = (Matrix3x3P) calloc(9, sizeof(float)*9);
 	
@@ -454,7 +454,7 @@ Matrix3x3P createMatrix3x3(float major_value){
 
 }
 
-Matrix3x3P createCopyMatrix3x3(Matrix3x3P m){
+static Matrix3x3P createCopyMatrix3x3(Matrix3x3P m){
 	
 	Matrix3x3P r = (Matrix3x3P) malloc(sizeof(float)*9);
 	
@@ -466,7 +466,7 @@ Matrix3x3P createCopyMatrix3x3(Matrix3x3P m){
 
 }
 
-void copyMatrix3x3(Matrix3x3P dest, Matrix3x3P src){
+static void copyMatrix3x3(Matrix3x3P dest, Matrix3x3P src){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2],
 	dest[3] = src[3], dest[4] = src[4], dest[5] = src[5],
@@ -474,7 +474,7 @@ void copyMatrix3x3(Matrix3x3P dest, Matrix3x3P src){
 	
 }
 
-void identityMatrix3x3(Matrix3x3P m){
+static void identityMatrix3x3(Matrix3x3P m){
 
 	m[0] = 1.0f, m[1] = 0.0f, m[2] = 0.0f,
 	m[3] = 0.0f, m[4] = 1.0f, m[5] = 0.0f,
@@ -482,7 +482,7 @@ void identityMatrix3x3(Matrix3x3P m){
 	
 }
 
-void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
+static void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
 	
 	float a0 = m1[0], a1 = m1[1], a2 = m1[2],
 	a3 = m1[3],	a4 = m1[4], a5 = m1[5],
@@ -506,7 +506,7 @@ void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest){
 		
 }
 
-Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z){
+static Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z){
 
 	return (Vector2){
 		m[0] * v.x + m[3] * v.y + m[6] * z,
@@ -515,7 +515,7 @@ Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z){
 	
 }
 
-Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v){
+static Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v){
 
 	return (Vector3){
 		m[0] * v.x + m[3] * v.y + m[6] * v.z,
@@ -525,7 +525,7 @@ Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v){
 	
 }
 
-void transposeMatrix3x3(Matrix3x3P m){
+static void transposeMatrix3x3(Matrix3x3P m){
 	
 	float m1 = m[1], m2 = m[2],
 	m3 = m[3], m5 = m[5],
@@ -537,7 +537,7 @@ void transposeMatrix3x3(Matrix3x3P m){
 	
 }
 
-float determinantMatrix3x3(Matrix3x3P m){
+static float determinantMatrix3x3(Matrix3x3P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2],
 		m3 = m[3], m4 = m[4], m5 = m[5],
@@ -547,7 +547,7 @@ float determinantMatrix3x3(Matrix3x3P m){
 	
 }
 
-void inverseMatrix3x3(Matrix3x3P m){
+static void inverseMatrix3x3(Matrix3x3P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2],
 		m3 = m[3], m4 = m[4], m5 = m[5],
@@ -575,7 +575,7 @@ void inverseMatrix3x3(Matrix3x3P m){
 	
 }
 
-void translateMatrix3x3(Matrix3x3P m, Vector2 v){
+static void translateMatrix3x3(Matrix3x3P m, Vector2 v){
 	
 	float r[] = {
 		1.0,0.0,0.0,
@@ -587,7 +587,7 @@ void translateMatrix3x3(Matrix3x3P m, Vector2 v){
 	
 }
 
-void scaleMatrix3x3(Matrix3x3P m, Vector2 v){
+static void scaleMatrix3x3(Matrix3x3P m, Vector2 v){
 
 	float r[] = {
 		v.x,0.0,0.0,
@@ -599,7 +599,7 @@ void scaleMatrix3x3(Matrix3x3P m, Vector2 v){
 	
 }
 
-void rotateMatrix3x3(Matrix3x3P m, float angle){
+static void rotateMatrix3x3(Matrix3x3P m, float angle){
 	
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -616,7 +616,7 @@ void rotateMatrix3x3(Matrix3x3P m, float angle){
 
 //Matrix4x4
 
-Matrix4x4P createMatrix4x4(float major_value){
+static Matrix4x4P createMatrix4x4(float major_value){
 
 	Matrix4x4P m = (Matrix4x4P) calloc(16, sizeof(float)*16);
 	
@@ -629,7 +629,7 @@ Matrix4x4P createMatrix4x4(float major_value){
 
 }
 
-Matrix4x4P createCopyMatrix4x4(Matrix4x4P m){
+static Matrix4x4P createCopyMatrix4x4(Matrix4x4P m){
 	
 	Matrix4x4P r = (Matrix4x4P) malloc(sizeof(float)*16);
 	
@@ -642,7 +642,7 @@ Matrix4x4P createCopyMatrix4x4(Matrix4x4P m){
 
 }
 
-void copyMatrix4x4(Matrix4x4P dest, Matrix4x4P src){
+static void copyMatrix4x4(Matrix4x4P dest, Matrix4x4P src){
 	
 	dest[0] = src[0], dest[1] = src[1], dest[2] = src[2], dest[3] = src[3],
 	dest[4] = src[4], dest[5] = src[5], dest[6] = src[6], dest[7] = src[7],
@@ -651,7 +651,7 @@ void copyMatrix4x4(Matrix4x4P dest, Matrix4x4P src){
 	
 }
 
-void identityMatrix4x4(Matrix4x4P m){
+static void identityMatrix4x4(Matrix4x4P m){
 
 	m[0] = 1.0f, m[1] = 0.0f, m[2] = 0.0f, m[3] = 0.0f,
 	m[4] = 0.0f, m[5] = 1.0f, m[6] = 0.0f, m[7] = 0.0f,
@@ -660,7 +660,7 @@ void identityMatrix4x4(Matrix4x4P m){
 	
 }
 
-void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
+static void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
 	
 	float a0 = m1[0], a1 = m1[1], a2 = m1[2], a3 = m1[3],
 	a4 = m1[4], a5 = m1[5], a6 = m1[6], a7 = m1[7],
@@ -694,7 +694,7 @@ void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest){
 		
 }
 
-Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w){
+static Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w){
 
 	return (Vector3){
 		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * w,
@@ -704,7 +704,7 @@ Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w){
 	
 }
 
-Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v){
+static Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v){
 
 	return (Vector4){
 		m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * v.w,
@@ -715,7 +715,7 @@ Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v){
 	
 }
 
-void transposeMatrix4x4(Matrix4x4P m){
+static void transposeMatrix4x4(Matrix4x4P m){
 	
 	float  m1 = m[1], m2 = m[2], m3 = m[3],
 		m4 = m[4], m6 = m[6], m7 = m[7],
@@ -729,7 +729,7 @@ void transposeMatrix4x4(Matrix4x4P m){
 	
 }
 
-float determinantMatrix4x4(Matrix4x4P m){
+static float determinantMatrix4x4(Matrix4x4P m){
 	
 	float m0 = m[0], m1 = m[1], m2 = m[2], m3 = m[3],
 		m4 = m[4], m5 = m[5], m6 = m[6], m7 = m[7],
@@ -753,7 +753,7 @@ float determinantMatrix4x4(Matrix4x4P m){
 	
 }
 
-void inverseMatrix4x4(Matrix4x4P m){
+static void inverseMatrix4x4(Matrix4x4P m){
 
 	float r[16];
 	
@@ -791,7 +791,7 @@ void inverseMatrix4x4(Matrix4x4P m){
 	
 }
 
-void translateMatrix4x4(Matrix4x4P m, Vector3 v){
+static void translateMatrix4x4(Matrix4x4P m, Vector3 v){
 	
 	float r[] = {
 		1.0,0.0,0.0,0.0,
@@ -804,7 +804,7 @@ void translateMatrix4x4(Matrix4x4P m, Vector3 v){
 	
 }
 
-void scaleMatrix4x4(Matrix4x4P m, Vector3 v){
+static void scaleMatrix4x4(Matrix4x4P m, Vector3 v){
 
 	float r[] = {
 		v.x,0.0,0.0,0.0,
@@ -817,7 +817,7 @@ void scaleMatrix4x4(Matrix4x4P m, Vector3 v){
 	
 }
 
-void rotateXMatrix4x4(Matrix4x4P m, float angle){
+static void rotateXMatrix4x4(Matrix4x4P m, float angle){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -833,7 +833,7 @@ void rotateXMatrix4x4(Matrix4x4P m, float angle){
 
 }
 
-void rotateYMatrix4x4(Matrix4x4P m, float angle){
+static void rotateYMatrix4x4(Matrix4x4P m, float angle){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -849,7 +849,7 @@ void rotateYMatrix4x4(Matrix4x4P m, float angle){
 
 }
 
-void rotateZMatrix4x4(Matrix4x4P m, float angle){
+static void rotateZMatrix4x4(Matrix4x4P m, float angle){
 	
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -865,7 +865,7 @@ void rotateZMatrix4x4(Matrix4x4P m, float angle){
 
 }
 
-void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v){
+static void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v){
 
 	float c = cosf(angle);
 	float s = sinf(angle);
@@ -898,19 +898,19 @@ void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v){
 
 //Quaternions
 
-Quaternion createQuaternion(float x, float y, float z, float w){
+static Quaternion createQuaternion(float x, float y, float z, float w){
 	
 	return (Quaternion) {x, y, z, w};
 
 }
 
-Quaternion createCopyQuaternion(Quaternion q){
+static Quaternion createCopyQuaternion(Quaternion q){
 
 	return (Quaternion) {q.x, q.y, q.z, q.w};
 	
 }
 
-Quaternion initQuaternionAxis(float angle, Vector3 axis){
+static Quaternion initQuaternionAxis(float angle, Vector3 axis){
 	
 	Vector3 n = normalizeVector3(axis);
 	
@@ -922,7 +922,7 @@ Quaternion initQuaternionAxis(float angle, Vector3 axis){
 	
 }
 
-Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2){
+static Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2){
 
 	return (Quaternion){
 		q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
@@ -933,7 +933,7 @@ Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2){
 
 }
 
-Quaternion anglesToQuaternion(Vector3 angles){
+static Quaternion anglesToQuaternion(Vector3 angles){
 	
 	float rad = 3.14159265358979323f / 180.0f;
 	
@@ -948,7 +948,7 @@ Quaternion anglesToQuaternion(Vector3 angles){
 	
 }
 
-Vector3 quaternionToAngles(Quaternion q){
+static Vector3 quaternionToAngles(Quaternion q){
 	
 	float deg = 180.0f / 3.14159265358979323f;
 	
@@ -962,7 +962,7 @@ Vector3 quaternionToAngles(Quaternion q){
 	
 }
 
-Quaternion normalizeQuaternion(Quaternion q){
+static Quaternion normalizeQuaternion(Quaternion q){
 
 	Vector4 s = (Vector4){q.x, q.y, q.z, q.w};
 	
@@ -978,7 +978,7 @@ Quaternion normalizeQuaternion(Quaternion q){
 
 }
 
-float dotQuaternion(Quaternion q1, Quaternion q2){
+static float dotQuaternion(Quaternion q1, Quaternion q2){
 	
 	Vector4 v0 = (Vector4){q1.x, q1.y, q1.z, q1.w};
 	Vector4 v1 = (Vector4){q2.x, q2.y, q2.z, q2.w};
@@ -987,13 +987,13 @@ float dotQuaternion(Quaternion q1, Quaternion q2){
 	
 }
 
-float normQuaternion(Quaternion q){
+static float normQuaternion(Quaternion q){
 	
 	return sqrtf(dotQuaternion(q,q));
 	
 }
 
-Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t){
+static Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t){
 	
 	Vector4 v0 = (Vector4){from.x, from.y, from.z, from.w};
 	Vector4 v1 = (Vector4){dest.x, dest.y, dest.z, dest.w};
@@ -1004,7 +1004,7 @@ Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t){
 	
 }
 
-Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
+static Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
 
 	Vector4 v0 = (Vector4){from.x, from.y, from.z, from.w};
 	Vector4 v1 = (Vector4){dest.x, dest.y, dest.z, dest.w};
@@ -1037,7 +1037,7 @@ Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t){
 	
 }
 
-void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest){
+static void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest){
 	
 	float x = q.x, y = q.y, z = q.z, w = q.w;
 	
@@ -1065,7 +1065,7 @@ void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest){
 	
 }
 
-void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
+static void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
 	
 	float x = q.x, y = q.y, z = q.z, w = q.w;
 	
@@ -1103,7 +1103,7 @@ void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest){
 
 //Camera
 
-void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m){
+static void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m){
 
 	float dif_right_left = right - left;
 	float dif_top_bottom = top - bottom;
@@ -1119,7 +1119,7 @@ void orthographicMatrix(float left, float right, float bottom, float top, float 
 
 }
 
-void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m){
+static void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m){
 
 	fov *= 3.14159265358979323f/180.0f;
 
@@ -1137,7 +1137,7 @@ void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4
 
 }
 
-void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m){
+static void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m){
 
 	Vector3 z_axis = subVector3(center,eye);
 	z_axis = normalizeVector3(z_axis);
@@ -1159,61 +1159,61 @@ void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m){
 
 //Utils
 
-float degToRad(float angle){
+static float degToRad(float angle){
 
 	return angle * 3.14159265358979323f / 180.0f;
 
 }
 
-float radToDeg(float angle){
+static float radToDeg(float angle){
 
 	return angle * 180.0f / 3.14159265358979323f;
 
 }
 
-Vector2 arrayToVector2(float v[2]){
+static Vector2 arrayToVector2(float v[2]){
 	
 	return (Vector2){v[0], v[1]};	
 	
 }
 
-Vector3 arrayToVector3(float v[3]){
+static Vector3 arrayToVector3(float v[3]){
 	
 	return (Vector3){v[0], v[1], v[2]};	
 	
 }
 
-Vector4 arrayToVector4(float v[4]){
+static Vector4 arrayToVector4(float v[4]){
 	
 	return (Vector4){v[0], v[1], v[2], v[3]};	
 	
 }
 
-int compVector2(Vector2 v1, Vector2 v2){
+static int compVector2(Vector2 v1, Vector2 v2){
 	
 	return (v1.x == v2.x && v1.y == v2.y);
 	
 }
 
-int compVector3(Vector3 v1, Vector3 v2){
+static int compVector3(Vector3 v1, Vector3 v2){
 	
 	return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z);
 	
 }
 
-int compVector4(Vector4 v1, Vector4 v2){
+static int compVector4(Vector4 v1, Vector4 v2){
 	
 	return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z && v1.w == v2.w);
 	
 }
 
-int compQuaternion(Quaternion q1, Quaternion q2){
+static int compQuaternion(Quaternion q1, Quaternion q2){
 	
 	return (q1.x == q2.x && q1.y == q2.y && q1.z == q2.z && q1.w == q2.w);
 	
 }
 
-int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2){
+static int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2){
 
 	return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2]
 	&& m1[3] == m2[3] && m1[4] == m2[4] && m1[5] == m2[5]
@@ -1221,7 +1221,7 @@ int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2){
 
 }
 
-int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2){
+static int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2){
 
 	return (m1[0] == m2[0] && m1[1] == m2[1] && m1[2] == m2[2] && m1[3] == m2[3]
 	&& m1[4] == m2[4] && m1[5] == m2[5] && m1[6] == m2[6] && m1[7] == m2[7]
@@ -1230,25 +1230,25 @@ int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2){
 
 }
 
-void printVector2(Vector2 v){
+static void printVector2(Vector2 v){
 
 	printf("%f %f\n",v.x,v.y);
 	
 }
 
-void printVector3(Vector3 v){
+static void printVector3(Vector3 v){
 
 	printf("%f %f %f\n",v.x,v.y,v.z);
 	
 }
 
-void printVector4(Vector4 v){
+static void printVector4(Vector4 v){
 
 	printf("%f %f %f %f\n",v.x,v.y,v.z,v.w);
 	
 }
 
-void printMatrix3x3(Matrix3x3P m){
+static void printMatrix3x3(Matrix3x3P m){
 
 	printf("%f %f %f\n%f %f %f\n%f %f %f\n",
 		m[0],m[1],m[2],
@@ -1258,7 +1258,7 @@ void printMatrix3x3(Matrix3x3P m){
 
 }
 
-void printMatrix4x4(Matrix4x4P m){
+static void printMatrix4x4(Matrix4x4P m){
 
 	printf("%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n",
 		m[0],m[1],m[2],m[3],
@@ -1269,7 +1269,7 @@ void printMatrix4x4(Matrix4x4P m){
 
 }
 
-void printQuaternion(Quaternion q){
+static void printQuaternion(Quaternion q){
 	
 	printf("%f %f %f %f\n",q.x,q.y,q.z,q.w);
 	
@@ -1277,7 +1277,7 @@ void printQuaternion(Quaternion q){
 
 //Extra
 
-Vector2 closestPointOnLine2D(Vector2 point, Vector2 v0, Vector2 v1){
+static Vector2 closestPointOnLine2D(Vector2 point, Vector2 v0, Vector2 v1){
 	
 	float line_length = distanceVector2(v0,v1);
 	Vector2 direction = divVector2(subVector2(v1,v0), (Vector2){line_length,line_length});
@@ -1290,7 +1290,7 @@ Vector2 closestPointOnLine2D(Vector2 point, Vector2 v0, Vector2 v1){
 	
 }
 
-Vector3 closestPointOnLine3D(Vector3 point, Vector3 v0, Vector3 v1){
+static Vector3 closestPointOnLine3D(Vector3 point, Vector3 v0, Vector3 v1){
 	
 	float line_length = distanceVector3(v0,v1);
 	Vector3 direction = divVector3(subVector3(v1,v0), (Vector3){line_length,line_length,line_length});
@@ -1303,7 +1303,7 @@ Vector3 closestPointOnLine3D(Vector3 point, Vector3 v0, Vector3 v1){
 	
 }
 
-int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance){
+static int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance){
 	
 	float d = dotVector3(direction, plane_normal);
 	float p1 = dotVector3(plane_position, negateVector3(plane_normal));
@@ -1317,7 +1317,7 @@ int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 
 	
 }
 
-int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, float* d, float* u, float* v){
+static int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, float* d, float* u, float* v){
 
 	float epsilon = 0.0000001;
 	
@@ -1354,7 +1354,7 @@ int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vecto
 
 }
 
-Vector3 rgbToHsv(float r, float g, float b){
+static Vector3 rgbToHsv(float r, float g, float b){
 
     r /= 255.0f, g /= 255.0f, b /= 255.0f;
     
@@ -1383,7 +1383,7 @@ Vector3 rgbToHsv(float r, float g, float b){
     
 }
 
-Vector3 hsvToRgb(float h, float s, float v){
+static Vector3 hsvToRgb(float h, float s, float v){
 
 	if(h > 360 || h < 0 || s > 100 || s < 0 || v > 100 || v < 0)
 		return (Vector3){0,0,0};
