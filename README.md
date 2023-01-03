@@ -4,7 +4,18 @@
   * C <br>
   * Unique Header <br>
   * Open Source <br>
+  
+### Include:
+```C
+    //By default, library comes with static functions.
+    //If you want not use static functions, then define before include:
+    #define CLAM_NOT_STATIC
 
+    //If you want to use static inline functions, then define before include:
+    #define CLAM_STATIC_INLINE
+    
+    #include"clam.h"
+```
 #### Usage Example:
 ```C
     Vector3 v = {0.0, 0.0, 0.0};
