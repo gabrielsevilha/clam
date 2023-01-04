@@ -7,13 +7,14 @@
   
 ### Include:
 ```C
-    //By default, library comes with static functions.
-    //If you want not use static functions, then define before include:
-    #define CLAM_NOT_STATIC
+    //If you want use static functions, then define before include:
+    #define CLAM_STATIC
 
-    //If you want to use static inline functions, then define before include:
+    //If you want use static inline functions, then define before include:
     #define CLAM_STATIC_INLINE
-    
+
+    //You must define CLAM_IMPLEMENTATION before the LAST include of this library.
+    #define CLAM_IMPLEMENTATION
     #include"clam.h"
 ```
 #### Usage Example:
