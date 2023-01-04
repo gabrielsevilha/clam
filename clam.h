@@ -1,5 +1,5 @@
 /*
-	Clam 1.2.44 (C Linear Algebra Math) By Gabriel Sevilha.
+	Clam 1.2.45 (C Linear Algebra Math) By Gabriel Sevilha.
 	
 	Library created for my own use, but if you like it, you can use it too, feel free to study the code.
 	
@@ -39,14 +39,20 @@
 
 //CLAMDEF
 
-#ifndef CLAM_NOT_STATIC
-	#ifndef CLAM_STATIC_INLINE
-		#define CLAMDEF static
+#ifndef CLAMDEF
+	#ifndef CLAM_STATIC
+		#ifdef CLAM_STATIC_INLINE
+			#define CLAMDEF static inline
+		#else
+			#define CLAMDEF extern
+		#endif
 	#else
-		#define CLAMDEF static inline
+		#ifdef CLAM_STATIC_INLINE
+			#define CLAMDEF static inline
+		#else
+			#define CLAMDEF static
+		#endif
 	#endif
-#else
-	#define CLAMDEF extern
 #endif
 
 //Types
@@ -91,6 +97,266 @@ typedef struct Quaternion{
 	float x, y, z, w;
 
 }Quaternion;
+
+//Vector2
+
+CLAMDEF Vector2 createVector2(float x, float y);
+
+CLAMDEF Vector2 createCopyVector2(Vector2 v);
+
+CLAMDEF Vector2 negateVector2(Vector2 v);
+
+CLAMDEF Vector2 sumVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF Vector2 subVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF Vector2 mulVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF Vector2 divVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF Vector2 scaleVector2(Vector2 v, float s);
+
+CLAMDEF Vector2 lerpVector2(Vector2 from, Vector2 dest, float t);
+
+CLAMDEF Vector2 normalizeVector2(Vector2 v);
+
+CLAMDEF float crossVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF Vector2 reflectVector2(Vector2 d, Vector2 n);
+
+CLAMDEF float dotVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF float normVector2(Vector2 v);
+
+CLAMDEF float distanceVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF float lengthVector2(Vector2 v);
+
+CLAMDEF float angleVector2(Vector2 v1, Vector2 v2);
+
+//Vector3
+
+CLAMDEF Vector3 createVector3(float x, float y, float z);
+
+CLAMDEF Vector3 createCopyVector3(Vector3 v);
+
+CLAMDEF Vector3 negateVector3(Vector3 v);
+
+CLAMDEF Vector3 sumVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF Vector3 subVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF Vector3 mulVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF Vector3 divVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF Vector3 scaleVector3(Vector3 v, float s);
+
+CLAMDEF Vector3 lerpVector3(Vector3 from, Vector3 dest, float t);
+
+CLAMDEF Vector3 normalizeVector3(Vector3 v);
+
+CLAMDEF Vector3 crossVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF Vector3 reflectVector3(Vector3 d, Vector3 n);
+
+CLAMDEF float dotVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF float normVector3(Vector3 v);
+
+CLAMDEF float distanceVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF float lengthVector3(Vector3 v);
+
+CLAMDEF float angleVector3(Vector3 v1, Vector3 v2);
+
+//Vector4
+
+CLAMDEF Vector4 createVector4(float x, float y, float z, float w);
+
+CLAMDEF Vector4 createCopyVector4(Vector4 v);
+
+CLAMDEF Vector4 negateVector4(Vector4 v);
+
+CLAMDEF Vector4 sumVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF Vector4 subVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF Vector4 mulVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF Vector4 divVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF Vector4 scaleVector4(Vector4 v, float s);
+
+CLAMDEF Vector4 lerpVector4(Vector4 from, Vector4 dest, float t);
+
+CLAMDEF Vector4 normalizeVector4(Vector4 v);
+
+CLAMDEF Vector4 reflectVector4(Vector4 d, Vector4 n);
+
+CLAMDEF float dotVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF float normVector4(Vector4 v);
+
+CLAMDEF float distanceVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF float lengthVector4(Vector4 v);
+
+CLAMDEF float angleVector4(Vector4 v1, Vector4 v2);
+
+//Matrix3x3
+
+CLAMDEF Matrix3x3P createMatrix3x3(float major_value);
+
+CLAMDEF Matrix3x3P createCopyMatrix3x3(Matrix3x3P m);
+
+CLAMDEF void copyMatrix3x3(Matrix3x3P dest, Matrix3x3P src);
+
+CLAMDEF void identityMatrix3x3(Matrix3x3P m);
+
+CLAMDEF void multiplyMatrix3x3(Matrix3x3P m1, Matrix3x3P m2, Matrix3x3P dest);
+
+CLAMDEF Vector2 multiplyMatrix3x3Vector2(Matrix3x3P m, Vector2 v, float z);
+
+CLAMDEF Vector3 multiplyMatrix3x3Vector3(Matrix3x3P m, Vector3 v);
+
+CLAMDEF void transposeMatrix3x3(Matrix3x3P m);
+
+CLAMDEF float determinantMatrix3x3(Matrix3x3P m);
+
+CLAMDEF void inverseMatrix3x3(Matrix3x3P m);
+
+CLAMDEF void translateMatrix3x3(Matrix3x3P m, Vector2 v);
+
+CLAMDEF void scaleMatrix3x3(Matrix3x3P m, Vector2 v);
+
+CLAMDEF void rotateMatrix3x3(Matrix3x3P m, float angle);
+
+//Matrix4x4
+
+CLAMDEF Matrix4x4P createMatrix4x4(float major_value);
+
+CLAMDEF Matrix4x4P createCopyMatrix4x4(Matrix4x4P m);
+
+CLAMDEF void copyMatrix4x4(Matrix4x4P dest, Matrix4x4P src);
+
+CLAMDEF void identityMatrix4x4(Matrix4x4P m);
+
+CLAMDEF void multiplyMatrix4x4(Matrix4x4P m1, Matrix4x4P m2, Matrix4x4P dest);
+
+CLAMDEF Vector3 multiplyMatrix4x4Vector3(Matrix4x4P m, Vector3 v, float w);
+
+CLAMDEF Vector4 multiplyMatrix4x4Vector4(Matrix4x4P m, Vector4 v);
+
+CLAMDEF void transposeMatrix4x4(Matrix4x4P m);
+
+CLAMDEF float determinantMatrix4x4(Matrix4x4P m);
+
+CLAMDEF void inverseMatrix4x4(Matrix4x4P m);
+
+CLAMDEF void translateMatrix4x4(Matrix4x4P m, Vector3 v);
+
+CLAMDEF void scaleMatrix4x4(Matrix4x4P m, Vector3 v);
+
+CLAMDEF void rotateXMatrix4x4(Matrix4x4P m, float angle);
+
+CLAMDEF void rotateYMatrix4x4(Matrix4x4P m, float angle);
+
+CLAMDEF void rotateZMatrix4x4(Matrix4x4P m, float angle);
+
+CLAMDEF void rotateMatrix4x4(Matrix4x4P m, float angle, Vector3 v);
+
+//Quaternions
+
+CLAMDEF Quaternion createQuaternion(float x, float y, float z, float w);
+
+CLAMDEF Quaternion createCopyQuaternion(Quaternion q);
+
+CLAMDEF Quaternion initQuaternionAxis(float angle, Vector3 axis);
+
+CLAMDEF Quaternion multiplyQuaternion(Quaternion q1, Quaternion q2);
+
+CLAMDEF Quaternion anglesToQuaternion(Vector3 angles);
+
+CLAMDEF Vector3 quaternionToAngles(Quaternion q);
+
+CLAMDEF Quaternion normalizeQuaternion(Quaternion q);
+
+CLAMDEF float dotQuaternion(Quaternion q1, Quaternion q2);
+
+CLAMDEF float normQuaternion(Quaternion q);
+
+CLAMDEF Quaternion lerpQuaternion(Quaternion from, Quaternion dest, float t);
+
+CLAMDEF Quaternion slerpQuaternion(Quaternion from, Quaternion dest, float t);
+
+CLAMDEF void quaternionToMatrix3x3(Quaternion q, Matrix3x3 dest);
+
+CLAMDEF void quaternionToMatrix4x4(Quaternion q, Matrix4x4 dest);
+
+//Camera
+
+CLAMDEF void orthographicMatrix(float left, float right, float bottom, float top, float near, float far, Matrix4x4P m);
+
+CLAMDEF void perspectiveMatrix(float fov, float aspect, float near, float far, Matrix4x4P m);
+
+CLAMDEF void lookatMatrix(Vector3 eye, Vector3 center, Vector3 up, Matrix4x4P m);
+
+//Utils
+
+CLAMDEF float degToRad(float angle);
+
+CLAMDEF float radToDeg(float angle);
+
+CLAMDEF Vector2 arrayToVector2(float v[2]);
+
+CLAMDEF Vector3 arrayToVector3(float v[3]);
+
+CLAMDEF Vector4 arrayToVector4(float v[4]);
+
+CLAMDEF int compVector2(Vector2 v1, Vector2 v2);
+
+CLAMDEF int compVector3(Vector3 v1, Vector3 v2);
+
+CLAMDEF int compVector4(Vector4 v1, Vector4 v2);
+
+CLAMDEF int compQuaternion(Quaternion q1, Quaternion q2);
+
+CLAMDEF int compMatrix3x3(Matrix3x3P m1, Matrix3x3P m2);
+
+CLAMDEF int compMatrix4x4(Matrix4x4P m1, Matrix4x4P m2);
+
+CLAMDEF void printVector2(Vector2 v);
+
+CLAMDEF void printVector3(Vector3 v);
+
+CLAMDEF void printVector4(Vector4 v);
+
+CLAMDEF void printMatrix3x3(Matrix3x3P m);
+
+CLAMDEF void printMatrix4x4(Matrix4x4P m);
+
+CLAMDEF void printQuaternion(Quaternion q);
+
+//Extra
+
+CLAMDEF Vector2 closestPointOnLine2D(Vector2 point, Vector2 v0, Vector2 v1);
+
+CLAMDEF Vector3 closestPointOnLine3D(Vector3 point, Vector3 v0, Vector3 v1);
+
+CLAMDEF int rayPlane(Vector3 origin, Vector3 direction, Vector3 plane_position, Vector3 plane_normal, float* distance);
+
+CLAMDEF int rayTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, float* d, float* u, float* v);
+
+CLAMDEF Vector3 rgbToHsv(float r, float g, float b);
+
+CLAMDEF Vector3 hsvToRgb(float h, float s, float v);
+
+//---------------------------------------- End of header file ----------------------------------------
+
+#endif //CLAM_LIBRARY_H
+
+#ifdef CLAM_IMPLEMENTATION
 
 //Vector2
 
@@ -1425,5 +1691,5 @@ CLAMDEF Vector3 hsvToRgb(float h, float s, float v){
     
 }
 
-#endif
+#endif //CLAM_IMPLEMENTATION
 
