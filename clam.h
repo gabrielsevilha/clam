@@ -1,5 +1,5 @@
 /*
-	Clam 1.2.45 (C Linear Algebra Math) By Gabriel Sevilha.
+	Clam 1.2.45 (C Linear Algebra Math) By Gabriel Sevilha (Gabriel Sevilha de Aguiar).
 	
 	Library created for my own use, but if you like it, you can use it too, feel free to study the code.
 	
