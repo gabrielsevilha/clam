@@ -7,7 +7,7 @@
 	
 	MIT License
 
-	Copyright (c) 2020-2022 Gabriel Sevilha
+	Copyright (c) 2020-2022 Gabriel Sevilha (Gabriel Sevilha de Aguiar)
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
